@@ -43,6 +43,7 @@ void hier()
 
   h(auto_inst_home,-1,-1,02755);
   d(auto_inst_home,"bin",-1,-1,02755);
+  d(auto_inst_home,"sbin",-1,-1,02755);
 
   c(auto_inst_home,"bin","dnscache-conf",-1,-1,0755);
   c(auto_inst_home,"bin","tinydns-conf",-1,-1,0755);
@@ -79,8 +80,8 @@ void hier()
   c(auto_inst_home,"bin","dnstrace",-1,-1,0755);
   c(auto_inst_home,"bin","dnstracesort",-1,-1,0755);
 
-  c(auto_inst_home,"bin","djbdns-chroot.suid",-1,-1,0755);
-  c(auto_inst_home,"bin","djbdns-chroot.login",-1,-1,0755);
+  c(auto_inst_home,"sbin","djbdns-chroot.suid",-1,-1,0755);
+  c(auto_inst_home,"sbin","djbdns-chroot.login",-1,-1,0755);
 
-  c(auto_inst_home,"bin","tinydns-sign.pl",-1,-1,0755);
+  c(auto_inst_home,"sbin","tinydns-sign",-1,-1,0755);
 }
