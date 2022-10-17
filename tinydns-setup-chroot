@@ -1,0 +1,28 @@
+#!/bin/sh
+
+_user=tinydns
+
+if [ -n "$1" ]; then
+    _user=$1
+fi
+
+_home=`getent passwd $_user|awk -F":" '{print $6}'`
+if [ -z "$_home" ]; then
+    echo "Unable to get home for $_user."
+    exit 1
+fi
+
+usermod -s /usr/sbin/djbdns-chroot.login $_user
+chown -R $_user $_home/root
+mkdir -p $_home/.ssh
+chown $_user $_home/.ssh
+chmod 750 $_home/.ssh
+mkdir -p $_home/bin
+
+if [ -f /usr/share/djbdns/chroot-binpack.tar ]; then
+    tar -xf /usr/share/djbdns/chroot-binpack.tar -C $_home/bin
+else
+    echo "chroot binpack not found. Create /usr/share/djbdns/chroot-binpack.tar"
+    echo "containing at least sh, cat, make, rsync and tinydns-data"
+    exit 1
+fi
