@@ -45,4 +45,7 @@ void hier()
   c(auto_home,"bin","dnsq",-1,-1,0755);
   c(auto_home,"bin","dnstrace",-1,-1,0755);
   c(auto_home,"bin","dnstracesort",-1,-1,0755);
+
+  c(auto_home,"bin","djbdns-chroot.suid",-1,-1,0755);
+  c(auto_home,"bin","djbdns-chroot.login",-1,-1,0755);
 }

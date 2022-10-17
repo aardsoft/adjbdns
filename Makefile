@@ -753,7 +753,8 @@ dnscache-conf dnscache walldns-conf walldns rbldns-conf rbldns \
 rbldns-data pickdns-conf pickdns pickdns-data tinydns-conf tinydns \
 tinydns-data tinydns-get tinydns-edit axfr-get axfrdns-conf axfrdns \
 dnsip dnsipq dnsname dnstxt dnsmx dnsfilter random-ip dnsqr dnsq \
-dnstrace dnstracesort cachetest utime rts dnsip6 dnsip6q
+dnstrace dnstracesort cachetest utime rts dnsip6 dnsip6q \
+djbdns-chroot.login djbdns-chroot.suid
 
 prot.o: \
 compile prot.c hasshsgr.h prot.h
@@ -1244,6 +1245,14 @@ tryip6.c choose compile haveip6.h1 haveip6.h2
 sockaddr_in6.h: \
 trysa6.c choose compile sockaddr_in6.h1 sockaddr_in6.h2 haveip6.h
 	./choose c trysa6 sockaddr_in6.h1 sockaddr_in6.h2 > sockaddr_in6.h
+
+djbdns-chroot.suid: \
+load djbdns-chroot.suid.o
+	./load djbdns-chroot.suid
+
+djbdns-chroot.login: \
+load djbdns-chroot.login.o
+	./load djbdns-chroot.login
 
 clean:
 	rm -f `cat TARGETS` data data.cdb test/[ot]*
