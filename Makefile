@@ -37,6 +37,10 @@ auto_home.o: \
 compile auto_home.c
 	./compile auto_home.c
 
+auto_inst_home.c: \
+auto-str conf-home
+	./auto-str auto_inst_home ${DESTDIR}`head -1 conf-home` > auto_inst_home.c
+
 axfr-get: \
 load axfr-get.o iopause.o timeoutread.o timeoutwrite.o dns.a libtai.a \
 alloc.a buffer.a unix.a byte.a
@@ -583,16 +587,16 @@ compile hier.c auto_home.h
 	./compile hier.c
 
 install: \
-load install.o hier.o auto_home.o buffer.a unix.a byte.a
-	./load install hier.o auto_home.o buffer.a unix.a byte.a
+load install.o hier.o auto_inst_home.o buffer.a unix.a byte.a
+	./load install hier.o auto_inst_home.o buffer.a unix.a byte.a
 
 install.o: \
 compile install.c buffer.h strerr.h error.h open.h exit.h
 	./compile install.c
 
 instcheck: \
-load instcheck.o hier.o auto_home.o buffer.a unix.a byte.a
-	./load instcheck hier.o auto_home.o buffer.a unix.a byte.a
+load instcheck.o hier.o auto_inst_home.o buffer.a unix.a byte.a
+	./load instcheck hier.o auto_inst_home.o buffer.a unix.a byte.a
 
 instcheck.o: \
 compile instcheck.c strerr.h error.h exit.h
