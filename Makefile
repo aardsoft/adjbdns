@@ -23,7 +23,7 @@ compile alloc_re.c alloc.h byte.h
 
 auto-str: \
 load auto-str.o buffer.a unix.a byte.a
-	./load auto-str buffer.a unix.a byte.a 
+	./load auto-str buffer.a unix.a byte.a
 
 auto-str.o: \
 compile auto-str.c buffer.h exit.h
@@ -41,7 +41,7 @@ axfr-get: \
 load axfr-get.o iopause.o timeoutread.o timeoutwrite.o dns.a libtai.a \
 alloc.a buffer.a unix.a byte.a
 	./load axfr-get iopause.o timeoutread.o timeoutwrite.o \
-	dns.a libtai.a alloc.a buffer.a unix.a byte.a 
+	dns.a libtai.a alloc.a buffer.a unix.a byte.a
 
 axfr-get.o: \
 compile axfr-get.c uint32.h uint16.h stralloc.h gen_alloc.h error.h \
@@ -61,7 +61,7 @@ cdb.a buffer.a unix.a byte.a sha1.o base32hex.o edns0.o
 axfrdns-conf: \
 load axfrdns-conf.o generic-conf.o auto_home.o buffer.a unix.a byte.a
 	./load axfrdns-conf generic-conf.o auto_home.o buffer.a \
-	unix.a byte.a 
+	unix.a byte.a
 
 axfrdns-conf.o: \
 compile axfrdns-conf.c strerr.h exit.h auto_home.h generic-conf.h \
@@ -161,7 +161,7 @@ uint32.h uint64.h
 cachetest: \
 load cachetest.o cache.o libtai.a buffer.a alloc.a unix.a byte.a
 	./load cachetest cache.o libtai.a buffer.a alloc.a unix.a \
-	byte.a 
+	byte.a
 
 cachetest.o: \
 compile cachetest.c buffer.h exit.h cache.h uint32.h uint64.h str.h
@@ -202,7 +202,7 @@ it instcheck
 
 chkshsgr: \
 load chkshsgr.o
-	./load chkshsgr 
+	./load chkshsgr
 
 chkshsgr.o: \
 compile chkshsgr.c exit.h
@@ -362,7 +362,7 @@ dnscache-conf: \
 load dnscache-conf.o generic-conf.o auto_home.o libtai.a buffer.a \
 unix.a byte.a
 	./load dnscache-conf generic-conf.o auto_home.o libtai.a \
-	buffer.a unix.a byte.a 
+	buffer.a unix.a byte.a
 
 dnscache-conf.o: \
 compile dnscache-conf.c hasdevtcp.h strerr.h buffer.h uint32.h taia.h \
@@ -584,7 +584,7 @@ compile hier.c auto_home.h
 
 install: \
 load install.o hier.o auto_home.o buffer.a unix.a byte.a
-	./load install hier.o auto_home.o buffer.a unix.a byte.a 
+	./load install hier.o auto_home.o buffer.a unix.a byte.a
 
 install.o: \
 compile install.c buffer.h strerr.h error.h open.h exit.h
@@ -592,7 +592,7 @@ compile install.c buffer.h strerr.h error.h open.h exit.h
 
 instcheck: \
 load instcheck.o hier.o auto_home.o buffer.a unix.a byte.a
-	./load instcheck hier.o auto_home.o buffer.a unix.a byte.a 
+	./load instcheck hier.o auto_home.o buffer.a unix.a byte.a
 
 instcheck.o: \
 compile instcheck.c strerr.h error.h exit.h
@@ -707,7 +707,7 @@ env.a libtai.a cdb.a alloc.a buffer.a unix.a byte.a socket.lib edns0.o
 pickdns-conf: \
 load pickdns-conf.o generic-conf.o auto_home.o buffer.a unix.a byte.a
 	./load pickdns-conf generic-conf.o auto_home.o buffer.a \
-	unix.a byte.a 
+	unix.a byte.a
 
 pickdns-conf.o: \
 compile pickdns-conf.c strerr.h exit.h auto_home.h generic-conf.h \
@@ -717,7 +717,7 @@ buffer.h
 pickdns-data: \
 load pickdns-data.o cdb.a dns.a alloc.a buffer.a unix.a byte.a
 	./load pickdns-data cdb.a dns.a alloc.a buffer.a unix.a \
-	byte.a 
+	byte.a
 
 pickdns-data.o: \
 compile pickdns-data.c buffer.h exit.h cdb_make.h buffer.h uint32.h \
@@ -772,7 +772,7 @@ response.h uint32.h query.h dns.h uint32.h
 
 random-ip: \
 load random-ip.o dns.a libtai.a buffer.a unix.a byte.a
-	./load random-ip dns.a libtai.a buffer.a unix.a byte.a 
+	./load random-ip dns.a libtai.a buffer.a unix.a byte.a
 
 random-ip.o: \
 compile random-ip.c buffer.h exit.h fmt.h scan.h dns.h stralloc.h \
@@ -789,7 +789,7 @@ env.a libtai.a cdb.a alloc.a buffer.a unix.a byte.a socket.lib edns0.o
 rbldns-conf: \
 load rbldns-conf.o generic-conf.o auto_home.o buffer.a unix.a byte.a
 	./load rbldns-conf generic-conf.o auto_home.o buffer.a \
-	unix.a byte.a 
+	unix.a byte.a
 
 rbldns-conf.o: \
 compile rbldns-conf.c strerr.h exit.h auto_home.h generic-conf.h \
@@ -798,7 +798,7 @@ buffer.h
 
 rbldns-data: \
 load rbldns-data.o cdb.a alloc.a buffer.a unix.a byte.a
-	./load rbldns-data cdb.a alloc.a buffer.a unix.a byte.a 
+	./load rbldns-data cdb.a alloc.a buffer.a unix.a byte.a
 
 rbldns-data.o: \
 compile rbldns-data.c buffer.h exit.h cdb_make.h buffer.h uint32.h \
@@ -1114,7 +1114,7 @@ socket.lib sha1.o base32hex.o edns0.o
 tinydns-conf: \
 load tinydns-conf.o generic-conf.o auto_home.o buffer.a unix.a byte.a
 	./load tinydns-conf generic-conf.o auto_home.o buffer.a \
-	unix.a byte.a 
+	unix.a byte.a
 
 tinydns-conf.o: \
 compile tinydns-conf.c strerr.h exit.h auto_home.h generic-conf.h \
@@ -1124,7 +1124,7 @@ buffer.h
 tinydns-data: \
 load tinydns-data.o cdb.a dns.a alloc.a buffer.a unix.a byte.a
 	./load tinydns-data cdb.a dns.a alloc.a buffer.a unix.a \
-	byte.a 
+	byte.a
 
 tinydns-data.o: \
 compile tinydns-data.c uint16.h uint32.h str.h byte.h fmt.h ip4.h \
@@ -1135,7 +1135,7 @@ stralloc.h iopause.h taia.h tai.h uint64.h taia.h ip6.h
 
 tinydns-edit: \
 load tinydns-edit.o dns.a alloc.a buffer.a unix.a byte.a
-	./load tinydns-edit dns.a alloc.a buffer.a unix.a byte.a 
+	./load tinydns-edit dns.a alloc.a buffer.a unix.a byte.a
 
 tinydns-edit.o: \
 compile tinydns-edit.c stralloc.h gen_alloc.h buffer.h exit.h open.h \
@@ -1209,7 +1209,7 @@ socket_accept6.o
 
 utime: \
 load utime.o byte.a
-	./load utime byte.a 
+	./load utime byte.a
 
 utime.o: \
 compile utime.c scan.h exit.h
@@ -1225,7 +1225,7 @@ dns.a env.a cdb.a alloc.a buffer.a unix.a byte.a socket.lib edns0.o
 walldns-conf: \
 load walldns-conf.o generic-conf.o auto_home.o buffer.a unix.a byte.a
 	./load walldns-conf generic-conf.o auto_home.o buffer.a \
-	unix.a byte.a 
+	unix.a byte.a
 
 walldns-conf.o: \
 compile walldns-conf.c strerr.h exit.h auto_home.h generic-conf.h \
