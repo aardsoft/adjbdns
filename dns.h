@@ -27,6 +27,8 @@
 #define DNS_T_NSEC3 "\0\62"
 #define DNS_T_NSEC3PARAM "\0\63"
 #define DNS_T_AXFR "\0\374"
+#define DNS_T_SRV "\0\041"
+#define DNS_T_NAPTR "\0\43"
 #define DNS_T_ANY "\0\377"
 /* Pseudo-RRs for DNSSEC */
 #define DNS_T_HASHREF "\377\1"
