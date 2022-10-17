@@ -1,0 +1,4 @@
+/usr/lib/systemd
+
+This is the systemd home directory. Programs will be installed in
+.../system.

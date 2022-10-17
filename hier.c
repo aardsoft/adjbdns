@@ -3,31 +3,43 @@
 #include <sys/stat.h>
 #include <string.h>
 #include "auto_inst_home.h"
+#include "auto_service_home.h"
 
 extern void h(const char* home,int uid,int gid,int mode);
 extern void d(const char* home,const char* subdir,int uid,int gid,int mode);
 extern void c(const char* home,const char* subdir,const char* file,int uid,int gid,int mode);
+
+void rd(const char* dir)
+{
+  struct stat st;
+  char tmp[PATH_MAX];
+  strncpy(tmp, dir, strlen(dir));
+  char* p=NULL;
+  for (p=tmp+1; *p; p++)
+    if (*p == '/'){
+      *p=0;
+      if (stat(tmp, &st))
+        d("/",tmp+1,-1,-1,02755);
+      *p='/';
+    }
+  d("/", dir+1,-1,-1,02755);
+}
 
 void hier()
 {
   char* destdir=getenv("DESTDIR");
 
   if (destdir){
-    struct stat st;
-    char tmp[PATH_MAX];
-    strncpy(tmp, auto_inst_home, strlen(auto_inst_home)-1);
-    char* p=NULL;
-    for (p=tmp+1; *p; p++)
-      if (*p == '/'){
-        *p=0;
-        if (stat(tmp, &st))
-          d("/",tmp+1,-1,-1,02755);
-        *p='/';
-      }
+    rd(auto_inst_home);
+    rd(auto_service_home);
     d(destdir,"etc",-1,-1,02755);
     c(destdir,"etc","dnsroots.global",-1,-1,0644);
   } else
     c("/","etc","dnsroots.global",-1,-1,0644);
+
+  d(auto_service_home,"system",-1,-1,02755);
+  c(auto_service_home,"system","tinydns.service",-1,-1,0644);
+  c(auto_service_home,"system","tinydns6.service",-1,-1,0644);
 
   h(auto_inst_home,-1,-1,02755);
   d(auto_inst_home,"bin",-1,-1,02755);
