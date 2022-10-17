@@ -1,0 +1,46 @@
+* adjbdns                                                             :TOC_4:
+  - [[#introduction][Introduction]]
+  - [[#services][Services]]
+    - [[#tinydns][tinydns]]
+    - [[#dnscache][dnscache]]
+
+** Introduction
+This is a fork of [[https://cr.yp.to/djbdns.html][djbdns version 1.05]] with various patches and own modifications added.
+
+The patches added are, in this order:
+- [[https://www.fefe.de/dns/][IPv6 patches]] in version [[https://www.fefe.de/dns/djbdns-1.05-test28.diff.xz][test28]]
+- [[http://www.tinydnssec.org/djbdns-ipv6-make.patch][djbdns-ipv6-make.patch]]
+- [[http://www.tinydnssec.org/][tinydnssec]] in version [[http://www.tinydnssec.org/download/tinydnssec-1.05-1.8.tar.bz2][1.8]]
+- a version of the [[https://github.com/balena/djbdns-srv-naptr][SRV/NAPTR patch]]
+
+Modifications include:
+- raise default memory limit, as the default limits caused issues on various modern machines
+- add scripts to chroot the tinydns user for SSH/rsync data updates
+- add basic DESTDIR support to make packaging easier
+- add systemd services
+
+** Services
+*** tinydns
+For a basic setup, do the inital configuration with tinydns-conf:
+
+#+BEGIN_SRC bash
+# tinydns-conf tinydns dnslog /etc/tinydns <your-ip>
+#+END_SRC
+
+Then put your configuration in /etc/tinydns/root/data, build the data.cdb file using "make", and start the server via systemd:
+
+#+BEGIN_SRC bash
+# systemctl enable tinydns
+# systemctl start tinydns
+#+END_SRC
+
+Check with "systemctl status" if the server is running. You should now be able to query the configured DNS records. Check the [[http://cr.yp.to/djbdns/run-server.html][djbdns page]] for more details on adding records:
+
+For an setup allowing chrooted ssh logins to update the data do the basic setup, then call "tinydns-setup-chroot" to set up basic directory structure and file permissions. After that, add keys (optionally with restrictions) to /etc/tinydns/.ssh/authorised_keys. Make it owned by tinydns user if you want the file editable via SSH.
+
+Add data and a new Makefile (tinydns-data is now in ../bin), and test remote logins.
+
+*** dnscache
+The internet has evolved a lot since djbdns was written, and dnscache does not handle todays (questionable) site setups spread over multiple domains very well. In most cases using a cache like unbound will perform significantly better.
+
+If you still want to run dnscache follow the instructions on the [[http://cr.yp.to/djbdns/run-cache.html][djbdns homepage]].
