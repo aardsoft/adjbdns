@@ -69,4 +69,6 @@ void hier()
 
   c(auto_inst_home,"bin","djbdns-chroot.suid",-1,-1,0755);
   c(auto_inst_home,"bin","djbdns-chroot.login",-1,-1,0755);
+
+  c(auto_inst_home,"bin","tinydns-sign.pl",-1,-1,0755);
 }
