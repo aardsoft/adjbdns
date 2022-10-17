@@ -1,6 +1,10 @@
 #include "hasshsgr.h"
 #include "prot.h"
 
+#include <sys/types.h>
+#include <unistd.h>
+#include <grp.h>
+
 int prot_gid(int gid)
 {
 #ifdef HASSHORTSETGROUPS

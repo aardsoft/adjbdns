@@ -4,9 +4,10 @@
 char bspace[256];
 buffer b = BUFFER_INIT(buffer_unixwrite,1,bspace,sizeof bspace);
 
-void puts(const char *s)
+int puts(const char *s)
 {
   if (buffer_puts(&b,s) == -1) _exit(111);
+  return 0;
 }
 
 int main(int argc,char **argv)
