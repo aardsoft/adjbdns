@@ -34,7 +34,7 @@ int find_client_loc(char loc[2],const char ip[16])
     unsigned int n;
     key[2] = 's';
     ip6_fmt_flat(key+3,ip);
-    for (n=19; n>3; --n) {
+    for (n=19; n>2; --n) {
       r = cdb_find(&c,key,n);
       if (r) break;
     }
