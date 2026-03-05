@@ -66,7 +66,7 @@ unsigned int ip6_scan(const char *s,char ip[16])
       break;
     i = scan_xlong(s,&u);
     if (!i) {
-      len--;
+      if (suffixlen) len--;
       break;
     }
     if (suffixlen+prefixlen<=12 && s[i]=='.') {
