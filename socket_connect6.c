@@ -11,7 +11,7 @@
 #include "uint32.h"
 #include "ip4.h"
 
-int socket_connect6(int s,const char ip[16],uint16 port,uint32 scope_id)
+int socket_connect6(int s,const unsigned char ip[16],uint16 port,uint32 scope_id)
 {
 #ifdef LIBC_HAS_IP6
   struct sockaddr_in6 sa;

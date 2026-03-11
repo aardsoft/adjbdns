@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int find_client_loc(char loc[2],const char ip[16])
+int find_client_loc(char loc[2],const unsigned char ip[16])
 {
   int r, fd;
   char key[32+3];

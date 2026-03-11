@@ -54,3 +54,5 @@
 /makelib
 /pickdns
 /auto_service_home.c
+/fcompcmdline.h
+/compile.sh

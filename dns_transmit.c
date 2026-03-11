@@ -97,7 +97,7 @@ static const int timeouts[4] = { 1, 3, 11, 45 };
 
 static int thisudp(struct dns_transmit *d)
 {
-  const char *ip;
+  const unsigned char *ip;
 
   socketfree(d);
 
@@ -148,7 +148,7 @@ static int nextudp(struct dns_transmit *d)
 static int thistcp(struct dns_transmit *d)
 {
   struct taia now;
-  const char *ip;
+  const unsigned char *ip;
 
   socketfree(d);
   packetfree(d);
@@ -194,7 +194,7 @@ static int nexttcp(struct dns_transmit *d)
   return thistcp(d);
 }
 
-int dns_transmit_start(struct dns_transmit *d,const char servers[256],int flagrecursive,const char *q,const char qtype[2],const char localip[16])
+int dns_transmit_start(struct dns_transmit *d,const unsigned char servers[256],int flagrecursive,const char *q,const char qtype[2],const unsigned char localip[16])
 {
   unsigned int len;
 
@@ -266,7 +266,7 @@ have sent query to curserver on UDP socket s
       if (errno == error_connrefused) if (d->udploop == 2) return 0;
       return nextudp(d);
     }
-    if (r + 1 > sizeof udpbuf) return 0;
+    if ((size_t)r + 1 > sizeof udpbuf) return 0;
 
     if (irrelevant(d,udpbuf,r)) return 0;
     if (serverwantstcp(udpbuf,r)) return firsttcp(d);

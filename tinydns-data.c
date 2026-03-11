@@ -202,16 +202,16 @@ static unsigned int scan_u32(const char *s,uint32 *u) {
 int main()
 {
   int fddata;
-  int i;
-  int j;
+  unsigned int i;
+  unsigned int j;
   int k;
   char ch;
   unsigned long ttl;
   char ttd[8];
   char loc[2];
   uint32 u;
-  char ip[4];
-  char ip6[16];
+  unsigned char ip[4];
+  unsigned char ip6[16];
   char type[2];
   char soa[20];
   char buf[4];
@@ -331,7 +331,7 @@ int main()
 
 	if (ip4_scan(f[1].s,ip)) {
 	  rr_start(DNS_T_A,ttl,ttd,loc);
-	  rr_add(ip,4);
+	  rr_add((const char*)ip,4);
 	  rr_finish(d2, 1);
 	}
 
@@ -348,7 +348,7 @@ int main()
 
 	if (ip4_scan(f[1].s,ip)) {
 	  rr_start(DNS_T_A,ttl,ttd,loc);
-	  rr_add(ip,4);
+	  rr_add((const char*)ip,4);
 	  rr_finish(d1, 1);
 
 	  if (line.s[0] == '=') {
@@ -370,7 +370,7 @@ int main()
 	if (!stralloc_0(&f[1])) nomem();
 	if (ip6_scan_flat(f[1].s,ip6)) {
 	  rr_start(DNS_T_AAAA,ttl,ttd,loc);
-	  rr_add(ip6,16);
+	  rr_add((const char*)ip6,16);
 	  rr_finish(d1, 1);
 
 	  if (line.s[0] == '6') {	/* emit both .ip6.arpa and .ip6.int */
@@ -413,7 +413,7 @@ int main()
 
 	if (ip4_scan(f[1].s,ip)) {
 	  rr_start(DNS_T_A,ttl,ttd,loc);
-	  rr_add(ip,4);
+	  rr_add((const char*)ip,4);
 	  rr_finish(d2, 1);
 	}
 	break;

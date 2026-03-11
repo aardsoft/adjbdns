@@ -37,7 +37,7 @@ static int dns_ip6_packet_add(stralloc *out,char *buf,unsigned int len)
     pos += datalen;
   }
 
-  dns_sortip6(out->s,out->len);
+  dns_sortip6((unsigned char*)out->s,out->len);
   return 0;
 }
 
@@ -53,14 +53,14 @@ int dns_ip6(stralloc *out,stralloc *fqdn)
   unsigned int i;
   char code;
   char ch;
-  char ip[16];
+  unsigned char ip[16];
 
   if (!stralloc_copys(out,"")) return -1;
   if (!stralloc_readyplus(fqdn,1)) return -1;
   fqdn->s[fqdn->len]=0;
   if ((i=ip6_scan(fqdn->s,ip))) {
     if (fqdn->s[i]) return -1;
-    stralloc_copyb(out,ip,16);
+    stralloc_copyb(out,(const char*)ip,16);
     return 0;
   }
   code = 0;

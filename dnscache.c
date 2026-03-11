@@ -25,7 +25,7 @@
 #include "droproot.h"
 #include "openreadclose.h"
 
-long interface;
+unsigned long interface;
 
 stralloc ignoreip = {0};
 
@@ -52,8 +52,8 @@ static int packetquery(char *buf,unsigned int len,char **q,char qtype[2],char qc
 }
 
 
-static char myipoutgoing[16];
-static char myipincoming[16];
+static unsigned char myipoutgoing[16];
+static unsigned char myipincoming[16];
 static char buf[1024];
 uint64 numqueries = 0;
 
@@ -66,7 +66,7 @@ static struct udpclient {
   struct taia start;
   uint64 active; /* query number, if active; otherwise 0 */
   iopause_fd *io;
-  char ip[16];
+  unsigned char ip[16];
   uint16 port;
   char id[2];
   uint32 scope_id;
@@ -118,7 +118,7 @@ void u_new(void)
 
   len = socket_recv6(udp53,buf,sizeof buf,x->ip,&x->port,&x->scope_id);
   if (len == -1) return;
-  if (len >= sizeof buf) return;
+  if ((size_t)len >= sizeof buf) return;
   if (x->port < 1024) if (x->port != 53) return;
   if (!okclient(x->ip)) return;
 
@@ -144,7 +144,7 @@ struct tcpclient {
   struct taia timeout;
   uint64 active; /* query number or 1, if active; otherwise 0 */
   iopause_fd *io;
-  char ip[16]; /* send response to this address */
+  unsigned char ip[16]; /* send response to this address */
   uint16 port; /* send response to this port */
   char id[2];
   int tcp; /* open TCP socket, if active */
@@ -457,7 +457,7 @@ int main()
       sa.s[i] = '\0';
       if (!stralloc_readyplus(&ignoreip,16))
 	strerr_die2x(111,FATAL,"out of memory parsing ignoreip");
-      if (!ip6_scan(sa.s+k,ignoreip.s+j))
+      if (!ip6_scan(sa.s+k,(unsigned char*)ignoreip.s+j))
         strerr_die3x(111,FATAL,"unable to parse address in ignoreip ",ignoreip.s+k);
       j += 16;
       k = i + 1;

@@ -6,7 +6,7 @@
 
 extern char tohex(char num);
 
-unsigned int ip6_fmt(char *s,const char ip[16])
+unsigned int ip6_fmt(char *s,const unsigned char ip[16])
 {
   unsigned int len;
   unsigned int i;
@@ -28,13 +28,15 @@ unsigned int ip6_fmt(char *s,const char ip[16])
       if (!compressing) {
 	compressing=1;
 	if (j==0) {
-	  if (s) *s++=':'; ++len;
+	  if (s) *s++=':';
+	  ++len;
 	}
       }
     } else {
       if (compressing) {
 	compressing=0; ++compressed;
-	if (s) *s++=':'; ++len;
+	if (s) *s++=':';
+	++len;
       }
       i = fmt_xlong(s,temp); len += i; if (s) s += i;
       if (j<14) {
@@ -49,7 +51,7 @@ unsigned int ip6_fmt(char *s,const char ip[16])
   return len;
 }
 
-unsigned int ip6_fmt_flat(char *s,const char ip[16])
+unsigned int ip6_fmt_flat(char *s,const unsigned char ip[16])
 {
   int i;
   for (i=0; i<16; i++) {

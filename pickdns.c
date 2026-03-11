@@ -66,7 +66,7 @@ static int doit(char *q,char qtype[2],char ip[16])
   if (cdb_read(&c,data,dlen,cdb_datapos(&c)) == -1) return 0;
 
   if (flaga) {
-    dns_sortip(data,dlen);
+    dns_sortip((unsigned char*)data,dlen);
     if (dlen > 12) dlen = 12;
     while (dlen >= 4) {
       dlen -= 4;

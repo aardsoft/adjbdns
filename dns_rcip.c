@@ -8,10 +8,10 @@
 
 static stralloc data = {0};
 
-static int init(char ip[256])
+static int init(unsigned char ip[256])
 {
   int i;
-  int j;
+  unsigned int j;
   int iplen = 0;
   char *x;
 
@@ -61,9 +61,9 @@ static int init(char ip[256])
 static int ok = 0;
 static unsigned int uses;
 static struct taia deadline;
-static char ip[256]; /* defined if ok */
+static unsigned char ip[256]; /* defined if ok */
 
-int dns_resolvconfip(char s[256])
+int dns_resolvconfip(unsigned char s[256])
 {
   struct taia now;
 

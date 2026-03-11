@@ -17,6 +17,8 @@ int main(int argc,char **argv)
   unsigned char ch;
   char octal[4];
 
+  (void)argc;
+
   name = argv[1];
   if (!name) _exit(100);
   value = argv[2];
@@ -26,7 +28,7 @@ int main(int argc,char **argv)
   puts(name);
   puts("[] = \"\\\n");
 
-  while (ch = *value++) {
+  while ((ch = *value++)) {
     puts("\\");
     octal[3] = 0;
     octal[2] = '0' + (ch & 7); ch >>= 3;

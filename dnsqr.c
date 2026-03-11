@@ -33,6 +33,8 @@ int main(int argc,char **argv)
 {
   uint16 u16;
 
+  (void)argc;	// unused
+
   dns_random_init(seed);
 
   if (!*argv) usage();

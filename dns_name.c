@@ -36,7 +36,7 @@ int dns_name_packet(stralloc *out,const char *buf,unsigned int len)
   return 0;
 }
 
-int dns_name4(stralloc *out,const char ip[4])
+int dns_name4(stralloc *out,const unsigned char ip[4])
 {
   char name[DNS_NAME4_DOMAIN];
 
@@ -48,7 +48,7 @@ int dns_name4(stralloc *out,const char ip[4])
   return 0;
 }
 
-int dns_name6_inner(stralloc *out,const char ip[16],int t)
+int dns_name6_inner(stralloc *out,const unsigned char ip[16],int t)
 {
   char name[DNS_NAME6_DOMAIN];
 
@@ -60,7 +60,7 @@ int dns_name6_inner(stralloc *out,const char ip[16],int t)
   return 0;
 }
 
-int dns_name6(stralloc *out,const char ip[16])
+int dns_name6(stralloc *out,const unsigned char ip[16])
 {
   if (ip6_isv4mapped(ip))
     return dns_name4(out,ip+12);

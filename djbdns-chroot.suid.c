@@ -1,6 +1,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <stdlib.h>
 
 static inline int __write2(const char *s){ return write(2, s, strlen(s)); };
 
@@ -9,7 +10,7 @@ static inline int __write2(const char *s){ return write(2, s, strlen(s)); };
 #define __attribute__(xyz)
 #endif
 
-void error() __attribute__((noreturn));
+void error(char *message) __attribute__((noreturn));
 void panic() __attribute__((noreturn));
 
 void error(char *message) {

@@ -14,7 +14,9 @@ char str[IP6_FMT];
 
 int main(int argc,char **argv)
 {
-  int i;
+  unsigned int i;
+
+  (void)argc;	// unused
 
   dns_random_init(seed);
 
@@ -27,7 +29,7 @@ int main(int argc,char **argv)
       strerr_die4sys(111,FATAL,"unable to find IPv6 address for ",*argv,": ");
 
     for (i = 0;i + 16 <= out.len;i += 16) {
-      buffer_put(buffer_1,str,ip6_fmt(str,out.s + i));
+      buffer_put(buffer_1,str,ip6_fmt(str,(const unsigned char*)out.s + i));
       buffer_puts(buffer_1," ");
     }
     buffer_puts(buffer_1,"\n");

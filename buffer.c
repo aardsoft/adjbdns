@@ -1,6 +1,6 @@
 #include "buffer.h"
 
-void buffer_init(buffer *s,int (*op)(),int fd,char *buf,unsigned int len)
+void buffer_init(buffer *s,int (*op)(int,void *,unsigned int),int fd,char *buf,unsigned int len)
 {
   s->x = buf;
   s->fd = fd;

@@ -25,7 +25,7 @@
 #include "clientloc.h"
 #include "edns0.h"
 
-extern int respond(char *,char *,char *);
+extern int respond(char *,char *,unsigned char ip[16]);
 
 #define FATAL "axfrdns: fatal: "
 
@@ -126,7 +126,7 @@ void get(char *buf,unsigned int len)
   }
 }
 
-char ip[16];
+unsigned char ip[16];
 unsigned long port;
 char clientloc[2];
 

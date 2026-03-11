@@ -117,7 +117,7 @@ int r;
   if (!want(hashName, DNS_T_NSEC3)) return 1;
 
   cdb_findstart(&c);
-  while (r = find(hashName,0)) {
+  while ((r = find(hashName,0))) {
     if (r == -1) return 0;
     if (byte_equal(type,2,DNS_T_NSEC3)) {
       if (!response_rstart(hashName,DNS_T_NSEC3,ttl)) return 0;
@@ -146,7 +146,7 @@ uint8_t digest[SHA1_DIGEST_SIZE];
 
   /* Search NSEC3PARAM to find hash parameters */
   cdb_findstart(&c);
-  while (r = find(control,0)) {
+  while ((r = find(control,0))) {
     if (r == -1) return 0;
     if (byte_equal(type,2,DNS_T_NSEC3PARAM) && dlen - dpos > 5) {
       algo = data[dpos];
@@ -183,7 +183,7 @@ uint8_t digest[SHA1_DIGEST_SIZE];
   salt[1] = nibble;
   byte_copy(salt+2, dns_domain_length(control), control);
   cdb_findstart(&c);
-  while (r = find(salt,0)) {
+  while ((r = find(salt,0))) {
     if (r == -1) return 0;
     if (byte_equal(type,2,DNS_T_HASHLIST) && dlen - dpos >= SHA1_DIGEST_SIZE) {
       int hpos = dpos + SHA1_DIGEST_SIZE;
@@ -206,7 +206,7 @@ int r;
 
   while (*q) {
     cdb_findstart(&c);
-    while (r = find(q,0)) {
+    while ((r = find(q,0))) {
       if (r == -1) return 0;
       if (byte_equal(type,2,DNS_T_HASHREF) && dlen > dpos) {
         if (!dns_packet_getname(data,dlen,dpos,&hashName)) return 0;
@@ -259,7 +259,7 @@ static int doit(char *q,char qtype[2])
     flagauthoritative = 0;
     flagsigned = 0;
     cdb_findstart(&c);
-    while (r = find(control,0)) {
+    while ((r = find(control,0))) {
       if (r == -1) return 0;
       if (byte_equal(type,2,DNS_T_SOA)) flagauthoritative = 1;
       else if (byte_equal(type,2,DNS_T_NS)) flagns = 1;
@@ -297,7 +297,7 @@ static int doit(char *q,char qtype[2])
     addrnum = addr6num = 0;
     addrttl = addr6ttl = 0;
     cdb_findstart(&c);
-    while (r = find(wild,wild != q)) {
+    while ((r = find(wild,wild != q))) {
       if (r == -1) return 0;
       flagfound = 1;
       if (flaggavesoa && byte_equal(type,2,DNS_T_SOA)) continue;
@@ -414,7 +414,7 @@ static int doit(char *q,char qtype[2])
   if (flagauthoritative && (aupos == anpos)) { /* NODATA or NXDOMAIN */
     if (!flaggavesoa) {
       cdb_findstart(&c);
-      while (r = find(control,0)) {
+      while ((r = find(control,0))) {
 	if (r == -1) return 0;
 	if (!flaggavesoa && byte_equal(type,2,DNS_T_SOA)) {
 	  if (!response_rstart(control,DNS_T_SOA,ttl)) return 0;
@@ -455,7 +455,7 @@ static int doit(char *q,char qtype[2])
     if (want(control,DNS_T_NS)) {
       int have_ds = 0;
       cdb_findstart(&c);
-      while (r = find(control,0)) {
+      while ((r = find(control,0))) {
         if (r == -1) return 0;
         if (byte_equal(type,2,DNS_T_NS)) {
           if (!response_rstart(control,DNS_T_NS,ttl)) return 0;
@@ -542,7 +542,7 @@ static int doit(char *q,char qtype[2])
   return 1;
 }
 
-int respond(char *q,char qtype[2],char ip[16])
+int respond(char *q,char qtype[2],char unsigned ip[16])
 {
   int fd;
   int r;

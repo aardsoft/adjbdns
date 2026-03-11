@@ -44,8 +44,8 @@ void die_write()
 
 char mode;
 static char *target;
-char targetip[4];
-char targetip6[16];
+unsigned char targetip[4];
+unsigned char targetip6[16];
 
 int fd;
 buffer b;
@@ -63,8 +63,8 @@ static stralloc f[NUMFIELDS];
 
 static char *d1;
 static char *d2;
-char ip[4];
-char ip6[16];
+unsigned char ip[4];
+unsigned char ip6[16];
 char ipstr[IP4_FMT];
 char ip6str[IP6_FMT];
 char strnum[FMT_ULONG];
@@ -82,9 +82,11 @@ int main(int argc,char **argv)
   unsigned long ttl;
   struct stat st;
   int i;
-  int j;
+  unsigned int j;
   int k;
   char ch;
+
+  (void)argc;	// unused
 
   if (!*argv) die_usage();
 

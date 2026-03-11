@@ -15,7 +15,7 @@ unsigned int mkint(unsigned char a,unsigned char b) {
   return ((unsigned int)a << 8) + (unsigned int)b;
 }
 
-int dns_name6_domain(char name[DNS_NAME6_DOMAIN],const char ip[16],int t)
+int dns_name6_domain(char name[DNS_NAME6_DOMAIN],const unsigned char ip[16],int t)
 {
   unsigned int j;
 

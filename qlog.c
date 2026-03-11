@@ -20,7 +20,7 @@ static void octal(unsigned char c)
   put('0' + (c & 7));
 }
 
-void qlog(const char ip[16],uint16 port,const char id[2],const char *q,const char qtype[2],const char *result)
+void qlog(const unsigned char ip[16],uint16 port,const char id[2],const char *q,const char qtype[2],const char *result)
 {
   char ch;
   char ch2;

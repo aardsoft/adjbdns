@@ -6,7 +6,7 @@
 #include "haveip6.h"
 #include "error.h"
 
-int socket_recv6(int s,char *buf,unsigned int len,char ip[16],uint16 *port,uint32 *scope_id)
+int socket_recv6(int s,char *buf,unsigned int len,unsigned char ip[16],uint16 *port,uint32 *scope_id)
 {
 #ifdef LIBC_HAS_IP6
   struct sockaddr_in6 sa;
@@ -32,8 +32,8 @@ int socket_recv6(int s,char *buf,unsigned int len,char ip[16],uint16 *port,uint3
   uint16_unpack_big((char *) &sa.sin6_port,port);
   if (scope_id) *scope_id=sa.sin6_scope_id;
 #else
-  byte_copy(ip,12,(char *)V4mappedprefix);
-  byte_copy(ip+12,4,(char *) &sa.sin_addr);
+  byte_copy(ip,12,(const char *)V4mappedprefix);
+  byte_copy(ip+12,4,(const char *) &sa.sin_addr);
   uint16_unpack_big((char *) &sa.sin_port,port);
   if (scope_id) *scope_id=0;
 #endif

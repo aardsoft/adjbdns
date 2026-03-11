@@ -4,7 +4,7 @@
 /* XXX: sort servers by configurable notion of closeness? */
 /* XXX: pay attention to competence of each server? */
 
-void dns_sortip6(char *s,unsigned int n)
+void dns_sortip6(unsigned char *s,unsigned int n)
 {
   unsigned int i;
   char tmp[16];

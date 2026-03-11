@@ -15,8 +15,8 @@ static stralloc data;
 
 static int roots_find(char *q)
 {
-  int i;
-  int j;
+  unsigned int i;
+  unsigned int j;
 
   i = 0;
   while (i < data.len) {
@@ -41,7 +41,7 @@ static int roots_search(char *q)
   }
 }
 
-int roots(char servers[256],char *q)
+int roots(unsigned char servers[256],char *q)
 {
   int r;
   r = roots_find(q);
@@ -61,10 +61,10 @@ static int init2(DIR *dir)
   const char *fqdn;
   static char *q;
   static stralloc text;
-  char servers[256];
-  int serverslen;
-  int i;
-  int j;
+  unsigned char servers[256];
+  unsigned int serverslen;
+  unsigned int i;
+  unsigned int j;
 
   for (;;) {
     errno = 0;
@@ -94,7 +94,7 @@ static int init2(DIR *dir)
       byte_zero(servers + serverslen,256 - serverslen);
 
       if (!stralloc_catb(&data,q,dns_domain_length(q))) return 0;
-      if (!stralloc_catb(&data,servers,256)) return 0;
+      if (!stralloc_catb(&data,(const char*)servers,256)) return 0;
     }
   }
 }

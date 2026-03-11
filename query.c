@@ -48,7 +48,7 @@ static void save_start(void)
   save_ok = 1;
 }
 
-static void save_data(const char *buf,unsigned int len)
+static void save_data(const void *buf,unsigned int len)
 {
   if (!save_ok) return;
   if (len > (sizeof save_buf) - save_len) { save_ok = 0; return; }
@@ -113,7 +113,7 @@ static int rqa(struct query *z)
   return 1;
 }
 
-static int globalip(char *d,char ip[16])
+static int globalip(char *d,unsigned char ip[16])
 {
   if (dns_domain_equal(d,"\011localhost\0")) {
     byte_copy(ip,4,"\177\0\0\1");
@@ -167,9 +167,9 @@ static int doit(struct query *z,int state)
   unsigned int cachedlen;
   char *buf;
   unsigned int len;
-  const char *whichserver;
+  unsigned const char *whichserver;
   char header[24];
-  char misc[20];
+  unsigned char misc[20];
   unsigned int rcode;
   unsigned int posanswers;
   uint16 numanswers;
@@ -428,7 +428,7 @@ static int doit(struct query *z,int state)
 	log_cachedanswer(d,DNS_T_NS);
 	if (!rqa(z)) goto DIE;
 	pos = 0;
-	while (pos = dns_packet_getname(cached,cachedlen,pos,&t2)) {
+	while ((pos = dns_packet_getname(cached,cachedlen,pos,&t2))) {
 	  if (!response_rstart(d,DNS_T_NS,ttl)) goto DIE;
 	  if (!response_addname(t2)) goto DIE;
 	  response_rfinish(RESPONSE_ANSWER);
@@ -445,7 +445,7 @@ static int doit(struct query *z,int state)
 	log_cachedanswer(d,DNS_T_PTR);
 	if (!rqa(z)) goto DIE;
 	pos = 0;
-	while (pos = dns_packet_getname(cached,cachedlen,pos,&t2)) {
+	while ((pos = dns_packet_getname(cached,cachedlen,pos,&t2))) {
 	  if (!response_rstart(d,DNS_T_PTR,ttl)) goto DIE;
 	  if (!response_addname(t2)) goto DIE;
 	  response_rfinish(RESPONSE_ANSWER);
@@ -462,7 +462,7 @@ static int doit(struct query *z,int state)
 	log_cachedanswer(d,DNS_T_MX);
 	if (!rqa(z)) goto DIE;
 	pos = 0;
-	while (pos = dns_packet_copy(cached,cachedlen,pos,misc,2)) {
+	while ((pos = dns_packet_copy(cached,cachedlen,pos,misc,2))) {
 	  pos = dns_packet_getname(cached,cachedlen,pos,&t2);
 	  if (!pos) break;
 	  if (!response_rstart(d,DNS_T_MX,ttl)) goto DIE;
@@ -588,7 +588,7 @@ static int doit(struct query *z,int state)
             dns_domain_free(&z->ns[z->level][j]);
           pos = 0;
           j = 0;
-          while (pos = dns_packet_getname(cached,cachedlen,pos,&t1)) {
+          while ((pos = dns_packet_getname(cached,cachedlen,pos,&t1))) {
 	    log_cachedns(d,t1);
             if (j < QUERY_MAXNS)
               if (!dns_domain_copy(&z->ns[z->level][j++],t1)) goto DIE;
@@ -785,7 +785,7 @@ static int doit(struct query *z,int state)
         pos = dns_packet_getname(buf,len,pos,&t3); if (!pos) goto DIE;
         pos = dns_packet_copy(buf,len,pos,misc,20); if (!pos) goto DIE;
         if (records[i] < posauthority)
-          log_rrsoa(whichserver,t1,t2,t3,misc,ttl);
+          log_rrsoa(whichserver,t1,t2,t3,(const char*)misc,ttl);
         ++i;
       }
     }
@@ -823,7 +823,7 @@ static int doit(struct query *z,int state)
         pos = dns_packet_skipname(buf,len,records[i]); if (!pos) goto DIE;
         pos = dns_packet_copy(buf,len,pos + 10,misc,2); if (!pos) goto DIE;
         pos = dns_packet_getname(buf,len,pos,&t2); if (!pos) goto DIE;
-        log_rrmx(whichserver,t1,t2,misc,ttl);
+        log_rrmx(whichserver,t1,t2,(const char*)misc,ttl);
         save_data(misc,2);
         save_data(t2,dns_domain_length(t2));
         ++i;
@@ -940,14 +940,14 @@ static int doit(struct query *z,int state)
         pos = dns_packet_getname(buf,len,pos,&t1); if (!pos) goto DIE;
         pos = dns_packet_copy(buf,len,pos,header,10); if (!pos) goto DIE;
         uint16_unpack_big(header + 8,&datalen);
-        if (dns_domain_equal(t1,d))
+        if (dns_domain_equal(t1,d)) {
           if (typematch(header,DNS_T_A))
             if (byte_equal(header + 2,2,DNS_C_IN)) /* should always be true */
               if (datalen == 4)
                 for (k = 0;k < 256;k += 16)
                   if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
 		    byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
-                    if (!dns_packet_copy(buf,len,pos,z->servers[z->level - 1] + k + 12,4)) goto DIE;
+                    if (!dns_packet_copy(buf,len,pos,(char*)(z->servers[z->level - 1] + k + 12),4)) goto DIE;
                     break;
                   }
           if (typematch(header,DNS_T_AAAA))
@@ -955,9 +955,10 @@ static int doit(struct query *z,int state)
               if (datalen == 16)
                 for (k = 0;k < 256;k += 16)
                   if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
-                    if (!dns_packet_copy(buf,len,pos,z->servers[z->level - 1] + k,16)) goto DIE;
+                    if (!dns_packet_copy(buf,len,pos,(char*)(z->servers[z->level - 1] + k),16)) goto DIE;
                     break;
                   }
+	}
         pos += datalen;
       }
       goto LOWERLEVEL;
@@ -1048,7 +1049,7 @@ static int doit(struct query *z,int state)
   return -1;
 }
 
-int query_start(struct query *z,char *dn,char type[2],char class[2],char localip[16],unsigned int scope_id)
+int query_start(struct query *z,char *dn,char type[2],char class[2],unsigned char localip[16],unsigned int scope_id)
 {
   if (byte_equal(type,2,DNS_T_AXFR)) { errno = error_perm; return -1; }
 

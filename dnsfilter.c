@@ -38,20 +38,20 @@ unsigned int maxactive = 10;
 static stralloc partial;
 
 char inbuf[1024];
-int inbuflen = 0;
+unsigned int inbuflen = 0;
 iopause_fd *inio;
 int flag0 = 1;
 
 iopause_fd *io;
 int iolen;
 
-char servers[256];
-char ip[4];
+unsigned char servers[256];
+unsigned char ip[4];
 char name[DNS_NAME4_DOMAIN];
 
 void errout(int i)
 {
-  int j;
+  unsigned int j;
 
   if (!stralloc_copys(&x[i].middle,":")) nomem();
   if (!stralloc_cats(&x[i].middle,error_str(errno))) nomem();
@@ -66,8 +66,8 @@ int main(int argc,char **argv)
   struct taia deadline;
   int opt;
   unsigned long u;
-  int i;
-  int j;
+  unsigned int i;
+  unsigned int j;
   int r;
 
   while ((opt = getopt(argc,argv,"c:l:")) != opteof)

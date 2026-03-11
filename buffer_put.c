@@ -3,7 +3,7 @@
 #include "byte.h"
 #include "error.h"
 
-static int allwrite(int (*op)(),int fd,const char *buf,unsigned int len)
+static int allwrite(int (*op)(int,void *,unsigned int),int fd,const char *buf,unsigned int len)
 {
   int w;
 
@@ -13,7 +13,7 @@ static int allwrite(int (*op)(),int fd,const char *buf,unsigned int len)
       if (errno == error_intr) continue;
       return -1; /* note that some data may have been written */
     }
-    if (w == 0) ; /* luser's fault */
+    if (w == 0) { }; /* luser's fault */
     buf += w;
     len -= w;
   }

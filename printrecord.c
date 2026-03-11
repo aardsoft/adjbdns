@@ -111,7 +111,7 @@ unsigned int printrecord_cat(stralloc *out,const char *buf,unsigned int len,unsi
     if (datalen != 16) { errno = error_proto; return 0; }
     if (!stralloc_cats(out," AAAA ")) return 0;
     pos = dns_packet_copy(buf,len,pos,misc,16); if (!pos) return 0;
-    stringlen=ip6_fmt(ip6str,misc);
+    stringlen=ip6_fmt(ip6str,(const unsigned char*)misc);
     if (!stralloc_catb(out,ip6str,stringlen)) return 0;
   }
   else if (byte_equal(misc,2,DNS_T_DNSKEY)) {

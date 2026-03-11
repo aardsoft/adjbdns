@@ -10,7 +10,7 @@ int dns_resolve(const char *q,const char qtype[2])
 {
   struct taia stamp;
   struct taia deadline;
-  char servers[256];
+  unsigned char servers[256];
   iopause_fd x[1];
   int r;
 

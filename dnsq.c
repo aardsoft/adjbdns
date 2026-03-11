@@ -26,7 +26,7 @@ void oops(void)
 
 static struct dns_transmit tx;
 
-int resolve(char *q,char qtype[2],char servers[256])
+int resolve(char *q,char qtype[2],unsigned char servers[256])
 {
   struct taia stamp;
   struct taia deadline;
@@ -49,7 +49,7 @@ int resolve(char *q,char qtype[2],char servers[256])
   return 0;
 }
 
-char servers[256];
+unsigned char servers[256];
 static stralloc ip;
 static stralloc fqdn;
 
@@ -63,6 +63,8 @@ static char seed[128];
 int main(int argc,char **argv)
 {
   uint16 u16;
+
+  (void)argc;	// unused
 
   dns_random_init(seed);
 

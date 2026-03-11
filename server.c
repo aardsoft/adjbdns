@@ -19,10 +19,10 @@
 
 extern char *fatal;
 extern char *starting;
-extern int respond(char *,char *,char *);
+extern int respond(char *,char *,unsigned char ip[16]);
 extern void initialize(void);
 
-static char ip[16];
+static unsigned char ip[16];
 static uint16 port;
 
 static char buf[513];
@@ -42,7 +42,7 @@ static int doit(void)
   char qtype[2];
   char qclass[2];
 
-  if (len >= sizeof buf) goto NOQ;
+  if ((unsigned int)len >= sizeof buf) goto NOQ;
   pos = dns_packet_copy(buf,len,0,header,12); if (!pos) goto NOQ;
   if (header[2] & 128) goto NOQ;
   if (header[4]) goto NOQ;
@@ -106,7 +106,7 @@ int main()
   off=cnt=0;
   while (x[off]) {
     unsigned int l;
-    char dummy[16];
+    unsigned char dummy[16];
     l=ip6_scan(x+off,dummy);
     if (!l)
       strerr_die3x(111,fatal,"unable to parse IP address ",x+off);

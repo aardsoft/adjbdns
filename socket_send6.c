@@ -8,7 +8,7 @@
 #include "haveip6.h"
 #include "error.h"
 
-int socket_send6(int s,const char *buf,unsigned int len,const char ip[16],uint16 port,uint32 scope_id)
+int socket_send6(int s,const char *buf,unsigned int len,const unsigned char ip[16],uint16 port,uint32 scope_id)
 {
 #ifdef LIBC_HAS_IP6
   struct sockaddr_in6 sa;
@@ -31,8 +31,10 @@ int socket_send6(int s,const char *buf,unsigned int len,const char ip[16],uint16
   sa.sin6_family = AF_INET6;
   uint16_pack_big((char *) &sa.sin6_port,port);
   byte_copy((char *) &sa.sin6_addr,16,ip);
+  sa.sin6_scope_id = scope_id;
   return sendto(s,buf,len,0,(struct sockaddr *) &sa,sizeof sa);
 #else
+  (void)scope_id;
   errno=error_proto;
   return -1;
 #endif

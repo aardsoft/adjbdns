@@ -9,12 +9,14 @@
 
 static char seed[128];
 
-char ip[4];
-char ip6[16];
+unsigned char ip[4];
+unsigned char ip6[16];
 static stralloc out;
 
 int main(int argc,char **argv)
 {
+  (void)argc;	//unused
+
   dns_random_init(seed);
 
   if (*argv) ++argv;

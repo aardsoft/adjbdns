@@ -8,7 +8,7 @@
 
 static char fn[3 + IP6_FMT];
 
-int okclient(char ip[16])
+int okclient(unsigned char ip[16])
 {
   struct stat st;
   int i;

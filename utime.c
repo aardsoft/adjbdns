@@ -12,6 +12,7 @@ struct utimbuf ut;
 
 int main(int argc,char **argv)
 {
+  (void)argc;	// unused
   fn = argv[1];
   if (!fn) _exit(100);
 

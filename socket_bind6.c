@@ -6,7 +6,7 @@
 #include "haveip6.h"
 #include "error.h"
 
-int socket_bind6(int s,const char ip[16],uint16 port,uint32 scope_id)
+int socket_bind6(int s,const unsigned char ip[16],uint16 port,uint32 scope_id)
 {
 #ifdef LIBC_HAS_IP6
   struct sockaddr_in6 sa;
@@ -34,7 +34,7 @@ int socket_bind6(int s,const char ip[16],uint16 port,uint32 scope_id)
 #endif
 }
 
-int socket_bind6_reuse(int s,const char ip[16],uint16 port,uint32 scope_id)
+int socket_bind6_reuse(int s,const unsigned char ip[16],uint16 port,uint32 scope_id)
 {
   int opt = 1;
   setsockopt(s,SOL_SOCKET,SO_REUSEADDR,&opt,sizeof opt);
