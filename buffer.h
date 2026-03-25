@@ -6,7 +6,7 @@ typedef struct buffer {
   unsigned int p;
   unsigned int n;
   int fd;
-  int (*op)(int, void *, unsigned int);
+  int (*op)(int,void *, unsigned int);
 } buffer;
 
 #define BUFFER_INIT(op,fd,buf,len) { (buf), 0, (len), (fd), (op) }

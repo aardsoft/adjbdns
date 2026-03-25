@@ -16,7 +16,7 @@ int socket_send6(int s,const char *buf,unsigned int len,const unsigned char ip[1
   struct sockaddr_in sa;
 #endif
 
-  byte_zero(&sa,sizeof sa);
+  byte_zero((char *)&sa,sizeof sa);
 #ifdef LIBC_HAS_IP6
   if (noipv6) {
 #endif

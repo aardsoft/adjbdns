@@ -161,44 +161,44 @@ int main()
     j = 1;
     for (i = 0;i < NUMFIELDS;++i) {
       if (j >= line.len) {
-	if (!stralloc_copys(&f[i],"")) nomem();
+        if (!stralloc_copys(&f[i],"")) nomem();
       }
       else {
         k = byte_chr(line.s + j,line.len - j,':');
-	if (!stralloc_copyb(&f[i],line.s + j,k)) nomem();
-	j += k + 1;
+        if (!stralloc_copyb(&f[i],line.s + j,k)) nomem();
+        j += k + 1;
       }
     }
 
     switch(line.s[0]) {
       default:
-	syntaxerror(": unrecognized leading character");
+        syntaxerror(": unrecognized leading character");
       case '#':
-	break;
+        break;
       case '-':
         break;
       case '+':
-	byte_zero(&t,sizeof t);
-	if (!dns_domain_fromdot(&t.name,f[0].s,f[0].len)) nomem();
-	t.namelen = dns_domain_length(t.name);
-	case_lowerb(t.name,t.namelen);
-	if (!stralloc_0(&f[1])) nomem();
-	if (!ip4_scan(f[1].s,t.ip)) syntaxerror(": malformed IP address");
-	if (!stralloc_0(&f[2])) nomem();
-	if (!stralloc_0(&f[2])) nomem();
-	byte_copy(t.location,2,f[2].s);
-	if (!address_alloc_append(&x,&t)) nomem();
-	break;
+        byte_zero((char *)&t,sizeof t);
+        if (!dns_domain_fromdot(&t.name,f[0].s,f[0].len)) nomem();
+        t.namelen = dns_domain_length(t.name);
+        case_lowerb(t.name,t.namelen);
+        if (!stralloc_0(&f[1])) nomem();
+        if (!ip4_scan(f[1].s,t.ip)) syntaxerror(": malformed IP address");
+        if (!stralloc_0(&f[2])) nomem();
+        if (!stralloc_0(&f[2])) nomem();
+        byte_copy(t.location,2,f[2].s);
+        if (!address_alloc_append(&x,&t)) nomem();
+        break;
       case '%':
-	if (!stralloc_0(&f[0])) nomem();
-	if (!stralloc_0(&f[0])) nomem();
-	if (!stralloc_copyb(&result,f[0].s,2)) nomem();
-	if (!stralloc_0(&f[1])) nomem();
-	if (!stralloc_copys(&key,"%")) nomem();
-	ipprefix_cat(&key,f[1].s);
+        if (!stralloc_0(&f[0])) nomem();
+        if (!stralloc_0(&f[0])) nomem();
+        if (!stralloc_copyb(&result,f[0].s,2)) nomem();
+        if (!stralloc_0(&f[1])) nomem();
+        if (!stralloc_copys(&key,"%")) nomem();
+        ipprefix_cat(&key,f[1].s);
         if (cdb_make_add(&cdb,key.s,key.len,result.s,result.len) == -1)
           die_datatmp();
-	break;
+        break;
     }
   }
 
@@ -209,7 +209,7 @@ int main()
   while (i < x.len) {
     for (j = i + 1;j < x.len;++j)
       if (address_diff(x.s + i,x.s + j))
-	break;
+        break;
     if (!stralloc_copys(&key,"+")) nomem();
     if (!stralloc_catb(&key,x.s[i].location,2)) nomem();
     if (!stralloc_catb(&key,x.s[i].name,x.s[i].namelen)) nomem();

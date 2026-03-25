@@ -74,13 +74,13 @@ void ipprefix_cat(stralloc *out,char *s)
     if (!stralloc_catb(out,"f",1)) nomem();
     for (;;)
       if (*s == '.')
-	++s;
+        ++s;
       else {
-	j = scan_ulong(s,&u);
-	if (!j) return;
-	s += j;
-	ch = u;
-	if (!stralloc_catb(out,&ch,1)) nomem();
+        j = scan_ulong(s,&u);
+        if (!j) return;
+        s += j;
+        ch = u;
+        if (!stralloc_catb(out,&ch,1)) nomem();
       }
   }
 }
@@ -101,11 +101,11 @@ void txtparse(stralloc *sa)
       if ((ch >= '0') && (ch <= '7')) {
         ch -= '0';
         if ((i < sa->len) && (sa->s[i] >= '0') && (sa->s[i] <= '7')) {
-	  ch <<= 3;
-	  ch += sa->s[i++] - '0';
+          ch <<= 3;
+          ch += sa->s[i++] - '0';
           if ((i < sa->len) && (sa->s[i] >= '0') && (sa->s[i] <= '7')) {
-	    ch <<= 3;
-	    ch += sa->s[i++] - '0';
+            ch <<= 3;
+            ch += sa->s[i++] - '0';
           }
         }
       }
@@ -210,6 +210,7 @@ int main()
   char ttd[8];
   char loc[2];
   uint32 u;
+  unsigned long utmp;
   unsigned char ip[4];
   unsigned char ip6[16];
   char type[2];
@@ -248,313 +249,313 @@ int main()
     j = 1;
     for (i = 0;i < NUMFIELDS;++i) {
       if (j >= line.len) {
-	if (!stralloc_copys(&f[i],"")) nomem();
+        if (!stralloc_copys(&f[i],"")) nomem();
       }
       else {
         k = byte_chr(line.s + j,line.len - j,':');
-	if (!stralloc_copyb(&f[i],line.s + j,k)) nomem();
-	j += k + 1;
+        if (!stralloc_copyb(&f[i],line.s + j,k)) nomem();
+        j += k + 1;
       }
     }
 
     switch(line.s[0]) {
 
       case '%':
-	locparse(&f[0],loc);
-	if (!stralloc_copyb(&key,"\0%",2)) nomem();
-	if (!stralloc_0(&f[1])) nomem();
-	ipprefix_cat(&key,f[1].s);
+        locparse(&f[0],loc);
+        if (!stralloc_copyb(&key,"\0%",2)) nomem();
+        if (!stralloc_0(&f[1])) nomem();
+        ipprefix_cat(&key,f[1].s);
         if (cdb_make_add(&cdb,key.s,key.len,loc,2) == -1)
           die_datatmp();
-	break;
+        break;
 
       case 'Z':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
 
-	if (!stralloc_0(&f[3])) nomem();
-	if (!scan_u32(f[3].s,&u)) uint32_unpack_big(defaultsoa,&u);
-	uint32_pack_big(soa,u);
-	if (!stralloc_0(&f[4])) nomem();
-	if (!scan_u32(f[4].s,&u)) uint32_unpack_big(defaultsoa + 4,&u);
-	uint32_pack_big(soa + 4,u);
-	if (!stralloc_0(&f[5])) nomem();
-	if (!scan_u32(f[5].s,&u)) uint32_unpack_big(defaultsoa + 8,&u);
-	uint32_pack_big(soa + 8,u);
-	if (!stralloc_0(&f[6])) nomem();
-	if (!scan_u32(f[6].s,&u)) uint32_unpack_big(defaultsoa + 12,&u);
-	uint32_pack_big(soa + 12,u);
-	if (!stralloc_0(&f[7])) nomem();
-	if (!scan_u32(f[7].s,&u)) uint32_unpack_big(defaultsoa + 16,&u);
-	uint32_pack_big(soa + 16,u);
+        if (!stralloc_0(&f[3])) nomem();
+        if (!scan_u32(f[3].s,&u)) uint32_unpack_big(defaultsoa,&u);
+        uint32_pack_big(soa,u);
+        if (!stralloc_0(&f[4])) nomem();
+        if (!scan_u32(f[4].s,&u)) uint32_unpack_big(defaultsoa + 4,&u);
+        uint32_pack_big(soa + 4,u);
+        if (!stralloc_0(&f[5])) nomem();
+        if (!scan_u32(f[5].s,&u)) uint32_unpack_big(defaultsoa + 8,&u);
+        uint32_pack_big(soa + 8,u);
+        if (!stralloc_0(&f[6])) nomem();
+        if (!scan_u32(f[6].s,&u)) uint32_unpack_big(defaultsoa + 12,&u);
+        uint32_pack_big(soa + 12,u);
+        if (!stralloc_0(&f[7])) nomem();
+        if (!scan_u32(f[7].s,&u)) uint32_unpack_big(defaultsoa + 16,&u);
+        uint32_pack_big(soa + 16,u);
 
-	if (!stralloc_0(&f[8])) nomem();
-	if (!scan_ulong(f[8].s,&ttl)) ttl = TTL_NEGATIVE;
-	ttdparse(&f[9],ttd);
-	locparse(&f[10],loc);
+        if (!stralloc_0(&f[8])) nomem();
+        if (!scan_ulong(f[8].s,&ttl)) ttl = TTL_NEGATIVE;
+        ttdparse(&f[9],ttd);
+        locparse(&f[10],loc);
 
-	rr_start(DNS_T_SOA,ttl,ttd,loc);
-	if (!dns_domain_fromdot(&d2,f[1].s,f[1].len)) nomem();
-	rr_addname(d2);
-	if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
-	rr_addname(d2);
-	rr_add(soa,20);
-	rr_finish(d1, 1);
-	break;
+        rr_start(DNS_T_SOA,ttl,ttd,loc);
+        if (!dns_domain_fromdot(&d2,f[1].s,f[1].len)) nomem();
+        rr_addname(d2);
+        if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
+        rr_addname(d2);
+        rr_add(soa,20);
+        rr_finish(d1, 1);
+        break;
 
       case '.': case '&':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[3])) nomem();
-	if (!scan_ulong(f[3].s,&ttl)) ttl = TTL_NS;
-	ttdparse(&f[4],ttd);
-	locparse(&f[5],loc);
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[3])) nomem();
+        if (!scan_ulong(f[3].s,&ttl)) ttl = TTL_NS;
+        ttdparse(&f[4],ttd);
+        locparse(&f[5],loc);
 
-	if (!stralloc_0(&f[1])) nomem();
+        if (!stralloc_0(&f[1])) nomem();
 
-	if (byte_chr(f[2].s,f[2].len,'.') >= f[2].len) {
-	  if (!stralloc_cats(&f[2],".ns.")) nomem();
-	  if (!stralloc_catb(&f[2],f[0].s,f[0].len)) nomem();
-	}
-	if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
+        if (byte_chr(f[2].s,f[2].len,'.') >= f[2].len) {
+          if (!stralloc_cats(&f[2],".ns.")) nomem();
+          if (!stralloc_catb(&f[2],f[0].s,f[0].len)) nomem();
+        }
+        if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
 
-	if (line.s[0] == '.') {
-	  rr_start(DNS_T_SOA,ttl ? TTL_NEGATIVE : 0,ttd,loc);
-	  rr_addname(d2);
-	  rr_add("\12hostmaster",11);
-	  rr_addname(d1);
-	  rr_add(defaultsoa,20);
-	  rr_finish(d1, 1);
-	}
+        if (line.s[0] == '.') {
+          rr_start(DNS_T_SOA,ttl ? TTL_NEGATIVE : 0,ttd,loc);
+          rr_addname(d2);
+          rr_add("\12hostmaster",11);
+          rr_addname(d1);
+          rr_add(defaultsoa,20);
+          rr_finish(d1, 1);
+        }
 
-	rr_start(DNS_T_NS,ttl,ttd,loc);
-	rr_addname(d2);
-	rr_finish(d1, 1);
-
-	if (ip4_scan(f[1].s,ip)) {
-	  rr_start(DNS_T_A,ttl,ttd,loc);
-	  rr_add((const char*)ip,4);
-	  rr_finish(d2, 1);
-	}
-
-	break;
-
-      case '+': case '=':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[2])) nomem();
-	if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[3],ttd);
-	locparse(&f[4],loc);
-
-	if (!stralloc_0(&f[1])) nomem();
-
-	if (ip4_scan(f[1].s,ip)) {
-	  rr_start(DNS_T_A,ttl,ttd,loc);
-	  rr_add((const char*)ip,4);
-	  rr_finish(d1, 1);
-
-	  if (line.s[0] == '=') {
-	    dns_name4_domain(dptr,ip);
-	    rr_start(DNS_T_PTR,ttl,ttd,loc);
-	    rr_addname(d1);
-	    rr_finish(dptr, 1);
-	  }
-	}
-	break;
-
-      case '6': case '3':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[2])) nomem();
-	if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[3],ttd);
-	locparse(&f[4],loc);
-
-	if (!stralloc_0(&f[1])) nomem();
-	if (ip6_scan_flat(f[1].s,ip6)) {
-	  rr_start(DNS_T_AAAA,ttl,ttd,loc);
-	  rr_add((const char*)ip6,16);
-	  rr_finish(d1, 1);
-
-	  if (line.s[0] == '6') {	/* emit both .ip6.arpa and .ip6.int */
-	    dns_name6_domain(d6ptr,ip6,DNS_IP6_ARPA);
-	    rr_start(DNS_T_PTR,ttl,ttd,loc);
-	    rr_addname(d1);
-	    rr_finish(d6ptr, 1);
-
-	    dns_name6_domain(d6ptr,ip6,DNS_IP6_INT);
-	    rr_start(DNS_T_PTR,ttl,ttd,loc);
-	    rr_addname(d1);
-	    rr_finish(d6ptr, 1);
-	  }
-	}
-	break;
-
-      case '@':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[4])) nomem();
-	if (!scan_ulong(f[4].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[5],ttd);
-	locparse(&f[6],loc);
-
-	if (!stralloc_0(&f[1])) nomem();
-
-	if (byte_chr(f[2].s,f[2].len,'.') >= f[2].len) {
-	  if (!stralloc_cats(&f[2],".mx.")) nomem();
-	  if (!stralloc_catb(&f[2],f[0].s,f[0].len)) nomem();
-	}
-	if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
-
-	if (!stralloc_0(&f[3])) nomem();
-	if (!scan_u32(f[3].s,&u)) u = 0;
-
-	rr_start(DNS_T_MX,ttl,ttd,loc);
-	uint16_pack_big(buf,u);
-	rr_add(buf,2);
-	rr_addname(d2);
-	rr_finish(d1, 1);
-
-	if (ip4_scan(f[1].s,ip)) {
-	  rr_start(DNS_T_A,ttl,ttd,loc);
-	  rr_add((const char*)ip,4);
-	  rr_finish(d2, 1);
-	}
-	break;
-
-      case '^': case 'C':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!dns_domain_fromdot(&d2,f[1].s,f[1].len)) nomem();
-	if (!stralloc_0(&f[2])) nomem();
-	if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[3],ttd);
-	locparse(&f[4],loc);
-
-	if (line.s[0] == 'C')
-	  rr_start(DNS_T_CNAME,ttl,ttd,loc);
-	else
-	  rr_start(DNS_T_PTR,ttl,ttd,loc);
-	rr_addname(d2);
-	rr_finish(d1, 1);
-	break;
-
-      case '\'':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[2])) nomem();
-	if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[3],ttd);
-	locparse(&f[4],loc);
-
-	rr_start(DNS_T_TXT,ttl,ttd,loc);
-
-	txtparse(&f[1]);
-	i = 0;
-	while (i < f[1].len) {
-	  k = f[1].len - i;
-	  if (k > 255) k = 255;
-	  ch = k;
-	  rr_add(&ch,1);
-	  rr_add(f[1].s + i,k);
-	  i += k;
-	}
-
-	rr_finish(d1, 1);
-	break;
-
-      case ':':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[3])) nomem();
-	if (!scan_ulong(f[3].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[4],ttd);
-	locparse(&f[5],loc);
-
-	if (!stralloc_0(&f[1])) nomem();
-	scan_u32(f[1].s,&u);
-	uint16_pack_big(type,u);
-	if (byte_equal(type,2,DNS_T_AXFR))
-	  syntaxerror(": type AXFR prohibited");
-	if (byte_equal(type,2,"\0\0"))
-	  syntaxerror(": type 0 prohibited");
-	if (byte_equal(type,2,DNS_T_SOA))
-	  syntaxerror(": type SOA prohibited");
-	if (byte_equal(type,2,DNS_T_NS))
-	  syntaxerror(": type NS prohibited");
-	if (byte_equal(type,2,DNS_T_CNAME))
-	  syntaxerror(": type CNAME prohibited");
-	if (byte_equal(type,2,DNS_T_PTR))
-	  syntaxerror(": type PTR prohibited");
-	if (byte_equal(type,2,DNS_T_MX))
-	  syntaxerror(": type MX prohibited");
-
-	txtparse(&f[2]);
-
-	rr_start(type,ttl,ttd,loc);
-	rr_add(f[2].s,f[2].len);
-	rr_finish(d1, u != 65282); /* preserve uppercase for hash database */
-	break;
-
-      case 'N':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!dns_domain_fromdot(&d2,f[6].s,f[6].len)) nomem();
-	if (!stralloc_0(&f[7])) nomem();
-	if (!scan_ulong(f[7].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[8],ttd);
-	locparse(&f[9],loc);
-
-	if (!stralloc_0(&f[1])) nomem();
-	if (!scan_ulong(f[1].s,&u)) u = 0;
-	uint16_pack_big(naptr,u);
-	if (!stralloc_0(&f[2])) nomem();
-	if (!scan_ulong(f[2].s,&u)) u = 0;
-	uint16_pack_big(naptr + 2,u);
-
-	txtparse(&f[3]); if (f[3].len > 255)
- 	  syntaxerror(": it is not allowed more than 255 chars in a label");
-	txtparse(&f[4]); if (f[4].len > 255)
- 	  syntaxerror(": it is not allowed more than 255 chars in a label");
-	txtparse(&f[5]); if (f[5].len > 255)
- 	  syntaxerror(": it is not allowed more than 255 chars in a label");
-
-	rr_start(DNS_T_NAPTR,ttl,ttd,loc);
-	rr_add(naptr,4);
-
-	ch = f[3].len; rr_add(&ch,1);
-	rr_add(f[3].s, f[3].len);
-	ch = f[4].len; rr_add(&ch,1);
-	rr_add(f[4].s, f[4].len);
-	ch = f[5].len; rr_add(&ch,1);
-	rr_add(f[5].s, f[5].len);
-
-	rr_addname(d2);
-	rr_finish(d1, 1);
-	break;
-
-      case 'S':
-	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
-	if (!stralloc_0(&f[6])) nomem();
-	if (!scan_ulong(f[6].s,&ttl)) ttl = TTL_POSITIVE;
-	ttdparse(&f[7],ttd);
-	locparse(&f[8],loc);
-
-	if (!stralloc_0(&f[1])) nomem();
-
-	if (byte_chr(f[2].s,f[2].len,'.') >= f[2].len) {
-	  if (!stralloc_cats(&f[2],".srv.")) nomem();
-	  if (!stralloc_catb(&f[2],f[0].s,f[0].len)) nomem();
-	}
-	if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
-
-	if (!stralloc_0(&f[4])) nomem();
-	if (!scan_ulong(f[4].s,&u)) u = 0;
-	uint16_pack_big(srv,u);
-	if (!stralloc_0(&f[5])) nomem();
-	if (!scan_ulong(f[5].s,&u)) u = 0;
-	uint16_pack_big(srv + 2,u);
-	if (!stralloc_0(&f[3])) nomem();
-	if (!scan_ulong(f[3].s,&u)) nomem();
-	uint16_pack_big(srv + 4,u);
-
-	rr_start(DNS_T_SRV,ttl,ttd,loc);
-	rr_add(srv,6);
+        rr_start(DNS_T_NS,ttl,ttd,loc);
         rr_addname(d2);
         rr_finish(d1, 1);
-	break;
+
+        if (ip4_scan(f[1].s,ip)) {
+          rr_start(DNS_T_A,ttl,ttd,loc);
+          rr_add((const char*)ip,4);
+          rr_finish(d2, 1);
+        }
+
+        break;
+
+      case '+': case '=':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[2])) nomem();
+        if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[3],ttd);
+        locparse(&f[4],loc);
+
+        if (!stralloc_0(&f[1])) nomem();
+
+        if (ip4_scan(f[1].s,ip)) {
+          rr_start(DNS_T_A,ttl,ttd,loc);
+          rr_add((const char*)ip,4);
+          rr_finish(d1, 1);
+
+          if (line.s[0] == '=') {
+            dns_name4_domain(dptr,ip);
+            rr_start(DNS_T_PTR,ttl,ttd,loc);
+            rr_addname(d1);
+            rr_finish(dptr, 1);
+          }
+        }
+        break;
+
+      case '6': case '3':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[2])) nomem();
+        if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[3],ttd);
+        locparse(&f[4],loc);
+
+        if (!stralloc_0(&f[1])) nomem();
+        if (ip6_scan_flat(f[1].s,ip6)) {
+          rr_start(DNS_T_AAAA,ttl,ttd,loc);
+          rr_add((const char*)ip6,16);
+          rr_finish(d1, 1);
+
+          if (line.s[0] == '6') {       /* emit both .ip6.arpa and .ip6.int */
+            dns_name6_domain(d6ptr,ip6,DNS_IP6_ARPA);
+            rr_start(DNS_T_PTR,ttl,ttd,loc);
+            rr_addname(d1);
+            rr_finish(d6ptr, 1);
+
+            dns_name6_domain(d6ptr,ip6,DNS_IP6_INT);
+            rr_start(DNS_T_PTR,ttl,ttd,loc);
+            rr_addname(d1);
+            rr_finish(d6ptr, 1);
+          }
+        }
+        break;
+
+      case '@':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[4])) nomem();
+        if (!scan_ulong(f[4].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[5],ttd);
+        locparse(&f[6],loc);
+
+        if (!stralloc_0(&f[1])) nomem();
+
+        if (byte_chr(f[2].s,f[2].len,'.') >= f[2].len) {
+          if (!stralloc_cats(&f[2],".mx.")) nomem();
+          if (!stralloc_catb(&f[2],f[0].s,f[0].len)) nomem();
+        }
+        if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
+
+        if (!stralloc_0(&f[3])) nomem();
+        if (!scan_u32(f[3].s,&u)) u = 0;
+
+        rr_start(DNS_T_MX,ttl,ttd,loc);
+        uint16_pack_big(buf,u);
+        rr_add(buf,2);
+        rr_addname(d2);
+        rr_finish(d1, 1);
+
+        if (ip4_scan(f[1].s,ip)) {
+          rr_start(DNS_T_A,ttl,ttd,loc);
+          rr_add((const char*)ip,4);
+          rr_finish(d2, 1);
+        }
+        break;
+
+      case '^': case 'C':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!dns_domain_fromdot(&d2,f[1].s,f[1].len)) nomem();
+        if (!stralloc_0(&f[2])) nomem();
+        if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[3],ttd);
+        locparse(&f[4],loc);
+
+        if (line.s[0] == 'C')
+          rr_start(DNS_T_CNAME,ttl,ttd,loc);
+        else
+          rr_start(DNS_T_PTR,ttl,ttd,loc);
+        rr_addname(d2);
+        rr_finish(d1, 1);
+        break;
+
+      case '\'':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[2])) nomem();
+        if (!scan_ulong(f[2].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[3],ttd);
+        locparse(&f[4],loc);
+
+        rr_start(DNS_T_TXT,ttl,ttd,loc);
+
+        txtparse(&f[1]);
+        i = 0;
+        while (i < f[1].len) {
+          k = f[1].len - i;
+          if (k > 255) k = 255;
+          ch = k;
+          rr_add(&ch,1);
+          rr_add(f[1].s + i,k);
+          i += k;
+        }
+
+        rr_finish(d1, 1);
+        break;
+
+      case ':':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[3])) nomem();
+        if (!scan_ulong(f[3].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[4],ttd);
+        locparse(&f[5],loc);
+
+        if (!stralloc_0(&f[1])) nomem();
+        scan_u32(f[1].s,&u);
+        uint16_pack_big(type,u);
+        if (byte_equal(type,2,DNS_T_AXFR))
+          syntaxerror(": type AXFR prohibited");
+        if (byte_equal(type,2,"\0\0"))
+          syntaxerror(": type 0 prohibited");
+        if (byte_equal(type,2,DNS_T_SOA))
+          syntaxerror(": type SOA prohibited");
+        if (byte_equal(type,2,DNS_T_NS))
+          syntaxerror(": type NS prohibited");
+        if (byte_equal(type,2,DNS_T_CNAME))
+          syntaxerror(": type CNAME prohibited");
+        if (byte_equal(type,2,DNS_T_PTR))
+          syntaxerror(": type PTR prohibited");
+        if (byte_equal(type,2,DNS_T_MX))
+          syntaxerror(": type MX prohibited");
+
+        txtparse(&f[2]);
+
+        rr_start(type,ttl,ttd,loc);
+        rr_add(f[2].s,f[2].len);
+        rr_finish(d1, u != 65282); /* preserve uppercase for hash database */
+        break;
+
+      case 'N':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!dns_domain_fromdot(&d2,f[6].s,f[6].len)) nomem();
+        if (!stralloc_0(&f[7])) nomem();
+        if (!scan_ulong(f[7].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[8],ttd);
+        locparse(&f[9],loc);
+
+        if (!stralloc_0(&f[1])) nomem();
+        if (scan_ulong(f[1].s, &utmp)) u = utmp; else u = 0;
+        uint16_pack_big(naptr,u);
+        if (!stralloc_0(&f[2])) nomem();
+        if (scan_ulong(f[2].s, &utmp)) u = utmp; else u = 0;
+        uint16_pack_big(naptr + 2,u);
+
+        txtparse(&f[3]); if (f[3].len > 255)
+          syntaxerror(": it is not allowed more than 255 chars in a label");
+        txtparse(&f[4]); if (f[4].len > 255)
+          syntaxerror(": it is not allowed more than 255 chars in a label");
+        txtparse(&f[5]); if (f[5].len > 255)
+          syntaxerror(": it is not allowed more than 255 chars in a label");
+
+        rr_start(DNS_T_NAPTR,ttl,ttd,loc);
+        rr_add(naptr,4);
+
+        ch = f[3].len; rr_add(&ch,1);
+        rr_add(f[3].s, f[3].len);
+        ch = f[4].len; rr_add(&ch,1);
+        rr_add(f[4].s, f[4].len);
+        ch = f[5].len; rr_add(&ch,1);
+        rr_add(f[5].s, f[5].len);
+
+        rr_addname(d2);
+        rr_finish(d1, 1);
+        break;
+
+      case 'S':
+        if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
+        if (!stralloc_0(&f[6])) nomem();
+        if (!scan_ulong(f[6].s,&ttl)) ttl = TTL_POSITIVE;
+        ttdparse(&f[7],ttd);
+        locparse(&f[8],loc);
+
+        if (!stralloc_0(&f[1])) nomem();
+
+        if (byte_chr(f[2].s,f[2].len,'.') >= f[2].len) {
+          if (!stralloc_cats(&f[2],".srv.")) nomem();
+          if (!stralloc_catb(&f[2],f[0].s,f[0].len)) nomem();
+        }
+        if (!dns_domain_fromdot(&d2,f[2].s,f[2].len)) nomem();
+
+        if (!stralloc_0(&f[4])) nomem();
+        if (scan_ulong(f[4].s, &utmp)) u = utmp; else u = 0;
+        uint16_pack_big(srv,u);
+        if (!stralloc_0(&f[5])) nomem();
+        if (scan_ulong(f[5].s, &utmp)) u = utmp; else u = 0;
+        uint16_pack_big(srv + 2,u);
+        if (!stralloc_0(&f[3])) nomem();
+        if (scan_ulong(f[3].s, &utmp)) u = utmp; else u = 0;
+        uint16_pack_big(srv + 4,u);
+
+        rr_start(DNS_T_SRV,ttl,ttd,loc);
+        rr_add(srv,6);
+        rr_addname(d2);
+        rr_finish(d1, 1);
+        break;
 
       default:
         syntaxerror(": unrecognized leading character");

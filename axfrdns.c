@@ -58,7 +58,7 @@ void die_cdbformat()
   strerr_die3x(111,FATAL,"unable to read data.cdb: ","format error");
 }
 
-int safewrite(int fd,char *buf,unsigned int len)
+int safewrite(int fd,void *buf,unsigned int len)
 {
   int w;
 

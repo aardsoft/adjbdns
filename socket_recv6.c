@@ -16,7 +16,7 @@ int socket_recv6(int s,char *buf,unsigned int len,unsigned char ip[16],uint16 *p
   unsigned int dummy = sizeof sa;
   int r;
 
-  byte_zero(&sa,dummy);
+  byte_zero((char *)&sa,dummy);
   r = recvfrom(s,buf,len,0,(struct sockaddr *) &sa,&dummy);
   if (r == -1) return -1;
 

@@ -73,7 +73,7 @@ void die_write(void)
   strerr_die4sys(111,FATAL,"unable to write ",fntmp,": ");
 }
 
-int saferead(int fd,char *buf,unsigned int len)
+int saferead(int fd,void *buf,unsigned int len)
 {
   int r;
   r = timeoutread(60,fd,buf,len);
@@ -81,7 +81,7 @@ int saferead(int fd,char *buf,unsigned int len)
   if (r <= 0) die_netread();
   return r;
 }
-int safewrite(int fd,char *buf,unsigned int len)
+int safewrite(int fd,void *buf,unsigned int len)
 {
   int r;
   r = timeoutwrite(60,fd,buf,len);

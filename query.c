@@ -167,7 +167,7 @@ static int doit(struct query *z,int state)
   unsigned int cachedlen;
   char *buf;
   unsigned int len;
-  unsigned const char *whichserver;
+  unsigned char *whichserver;
   char header[24];
   unsigned char misc[20];
   unsigned int rcode;
@@ -215,10 +215,10 @@ static int doit(struct query *z,int state)
     if (z->level) {
       for (k = 0;k < 256;k += 16)
         if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
-	  byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
-	  byte_copy(z->servers[z->level - 1] + k + 12,4,misc);
-	  break;
-	}
+          byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
+          byte_copy(z->servers[z->level - 1] + k + 12,4,misc);
+          break;
+        }
       goto LOWERLEVEL;
     }
     if (!rqa(z)) goto DIE;
@@ -310,9 +310,9 @@ static int doit(struct query *z,int state)
       if (z->level) goto LOWERLEVEL;
       if (!rqa(z)) goto DIE;
       if (typematch(DNS_T_AAAA,dtype)) {
-	if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
-	if (!response_addbytes("\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\001",16)) goto DIE;
-	response_rfinish(RESPONSE_ANSWER);
+        if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
+        if (!response_addbytes("\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\001",16)) goto DIE;
+        response_rfinish(RESPONSE_ANSWER);
       }
       cleanup(z);
       return 1;
@@ -323,9 +323,9 @@ static int doit(struct query *z,int state)
       if (z->level) goto LOWERLEVEL;
       if (!rqa(z)) goto DIE;
       if (typematch(DNS_T_AAAA,dtype)) {
-	if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
-	if (!response_addbytes("\376\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",16)) goto DIE;
-	response_rfinish(RESPONSE_ANSWER);
+        if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
+        if (!response_addbytes("\376\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",16)) goto DIE;
+        response_rfinish(RESPONSE_ANSWER);
       }
       cleanup(z);
       return 1;
@@ -336,9 +336,9 @@ static int doit(struct query *z,int state)
       if (z->level) goto LOWERLEVEL;
       if (!rqa(z)) goto DIE;
       if (typematch(DNS_T_AAAA,dtype)) {
-	if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
-	if (!response_addbytes("\377\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",16)) goto DIE;
-	response_rfinish(RESPONSE_ANSWER);
+        if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
+        if (!response_addbytes("\377\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",16)) goto DIE;
+        response_rfinish(RESPONSE_ANSWER);
       }
       cleanup(z);
       return 1;
@@ -349,9 +349,9 @@ static int doit(struct query *z,int state)
       if (z->level) goto LOWERLEVEL;
       if (!rqa(z)) goto DIE;
       if (typematch(DNS_T_AAAA,dtype)) {
-	if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
-	if (!response_addbytes("\377\002\000\000\000\000\000\000\000\000\000\000\000\000\000\001",16)) goto DIE;
-	response_rfinish(RESPONSE_ANSWER);
+        if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
+        if (!response_addbytes("\377\002\000\000\000\000\000\000\000\000\000\000\000\000\000\001",16)) goto DIE;
+        response_rfinish(RESPONSE_ANSWER);
       }
       cleanup(z);
       return 1;
@@ -362,9 +362,9 @@ static int doit(struct query *z,int state)
       if (z->level) goto LOWERLEVEL;
       if (!rqa(z)) goto DIE;
       if (typematch(DNS_T_AAAA,dtype)) {
-	if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
-	if (!response_addbytes("\377\002\000\000\000\000\000\000\000\000\000\000\000\000\000\002",16)) goto DIE;
-	response_rfinish(RESPONSE_ANSWER);
+        if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
+        if (!response_addbytes("\377\002\000\000\000\000\000\000\000\000\000\000\000\000\000\002",16)) goto DIE;
+        response_rfinish(RESPONSE_ANSWER);
       }
       cleanup(z);
       return 1;
@@ -375,9 +375,9 @@ static int doit(struct query *z,int state)
       if (z->level) goto LOWERLEVEL;
       if (!rqa(z)) goto DIE;
       if (typematch(DNS_T_AAAA,dtype)) {
-	if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
-	if (!response_addbytes("\377\002\000\000\000\000\000\000\000\000\000\000\000\000\000\003",16)) goto DIE;
-	response_rfinish(RESPONSE_ANSWER);
+        if (!response_rstart(d,DNS_T_AAAA,655360)) goto DIE;
+        if (!response_addbytes("\377\002\000\000\000\000\000\000\000\000\000\000\000\000\000\003",16)) goto DIE;
+        response_rfinish(RESPONSE_ANSWER);
       }
       cleanup(z);
       return 1;
@@ -412,9 +412,9 @@ static int doit(struct query *z,int state)
       if (typematch(DNS_T_CNAME,dtype)) {
         log_cachedanswer(d,DNS_T_CNAME);
         if (!rqa(z)) goto DIE;
-	if (!response_cname(z->name[0],cached,ttl)) goto DIE;
-	cleanup(z);
-	return 1;
+        if (!response_cname(z->name[0],cached,ttl)) goto DIE;
+        cleanup(z);
+        return 1;
       }
       log_cachedcname(d,cached);
       if (!dns_domain_copy(&cname,cached)) goto DIE;
@@ -425,16 +425,16 @@ static int doit(struct query *z,int state)
       byte_copy(key,2,DNS_T_NS);
       cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
       if (cached && (cachedlen || byte_diff(dtype,2,DNS_T_ANY))) {
-	log_cachedanswer(d,DNS_T_NS);
-	if (!rqa(z)) goto DIE;
-	pos = 0;
-	while ((pos = dns_packet_getname(cached,cachedlen,pos,&t2))) {
-	  if (!response_rstart(d,DNS_T_NS,ttl)) goto DIE;
-	  if (!response_addname(t2)) goto DIE;
-	  response_rfinish(RESPONSE_ANSWER);
-	}
-	cleanup(z);
-	return 1;
+        log_cachedanswer(d,DNS_T_NS);
+        if (!rqa(z)) goto DIE;
+        pos = 0;
+        while ((pos = dns_packet_getname(cached,cachedlen,pos,&t2))) {
+          if (!response_rstart(d,DNS_T_NS,ttl)) goto DIE;
+          if (!response_addname(t2)) goto DIE;
+          response_rfinish(RESPONSE_ANSWER);
+        }
+        cleanup(z);
+        return 1;
       }
     }
 
@@ -442,16 +442,16 @@ static int doit(struct query *z,int state)
       byte_copy(key,2,DNS_T_PTR);
       cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
       if (cached && (cachedlen || byte_diff(dtype,2,DNS_T_ANY))) {
-	log_cachedanswer(d,DNS_T_PTR);
-	if (!rqa(z)) goto DIE;
-	pos = 0;
-	while ((pos = dns_packet_getname(cached,cachedlen,pos,&t2))) {
-	  if (!response_rstart(d,DNS_T_PTR,ttl)) goto DIE;
-	  if (!response_addname(t2)) goto DIE;
-	  response_rfinish(RESPONSE_ANSWER);
-	}
-	cleanup(z);
-	return 1;
+        log_cachedanswer(d,DNS_T_PTR);
+        if (!rqa(z)) goto DIE;
+        pos = 0;
+        while ((pos = dns_packet_getname(cached,cachedlen,pos,&t2))) {
+          if (!response_rstart(d,DNS_T_PTR,ttl)) goto DIE;
+          if (!response_addname(t2)) goto DIE;
+          response_rfinish(RESPONSE_ANSWER);
+        }
+        cleanup(z);
+        return 1;
       }
     }
 
@@ -459,56 +459,56 @@ static int doit(struct query *z,int state)
       byte_copy(key,2,DNS_T_MX);
       cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
       if (cached && (cachedlen || byte_diff(dtype,2,DNS_T_ANY))) {
-	log_cachedanswer(d,DNS_T_MX);
-	if (!rqa(z)) goto DIE;
-	pos = 0;
-	while ((pos = dns_packet_copy(cached,cachedlen,pos,misc,2))) {
-	  pos = dns_packet_getname(cached,cachedlen,pos,&t2);
-	  if (!pos) break;
-	  if (!response_rstart(d,DNS_T_MX,ttl)) goto DIE;
-	  if (!response_addbytes(misc,2)) goto DIE;
-	  if (!response_addname(t2)) goto DIE;
-	  response_rfinish(RESPONSE_ANSWER);
-	}
-	cleanup(z);
-	return 1;
+        log_cachedanswer(d,DNS_T_MX);
+        if (!rqa(z)) goto DIE;
+        pos = 0;
+        while ((pos = dns_packet_copy(cached,cachedlen,pos,misc,2))) {
+          pos = dns_packet_getname(cached,cachedlen,pos,&t2);
+          if (!pos) break;
+          if (!response_rstart(d,DNS_T_MX,ttl)) goto DIE;
+          if (!response_addbytes(misc,2)) goto DIE;
+          if (!response_addname(t2)) goto DIE;
+          response_rfinish(RESPONSE_ANSWER);
+        }
+        cleanup(z);
+        return 1;
       }
     }
 
     if (typematch(DNS_T_A,dtype)) {
       byte_copy(key,2,DNS_T_A);
       cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
-      if (cached && !cachedlen && z->level) {	/* if we were looking the A record up to find an NS, try IPv6 too */
-	z->ipv6[z->level]=1;
-	goto NEWNAME;
+      if (cached && !cachedlen && z->level) {   /* if we were looking the A record up to find an NS, try IPv6 too */
+        z->ipv6[z->level]=1;
+        goto NEWNAME;
       }
       if (cached && (cachedlen || byte_diff(dtype,2,DNS_T_ANY))) {
-	if (z->level) {
-	  log_cachedanswer(d,DNS_T_A);
-	  while (cachedlen >= 4) {
-	    for (k = 0;k < 256;k += 16)
-	      if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
-		byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
-		byte_copy(z->servers[z->level - 1] + k + 12,4,cached);
-		break;
-	      }
-	    cached += 4;
-	    cachedlen -= 4;
-	  }
-	  goto LOWERLEVEL;
-	}
+        if (z->level) {
+          log_cachedanswer(d,DNS_T_A);
+          while (cachedlen >= 4) {
+            for (k = 0;k < 256;k += 16)
+              if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
+                byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
+                byte_copy(z->servers[z->level - 1] + k + 12,4,cached);
+                break;
+              }
+            cached += 4;
+            cachedlen -= 4;
+          }
+          goto LOWERLEVEL;
+        }
 
-	log_cachedanswer(d,DNS_T_A);
-	if (!rqa(z)) goto DIE;
-	while (cachedlen >= 4) {
-	  if (!response_rstart(d,DNS_T_A,ttl)) goto DIE;
-	  if (!response_addbytes(cached,4)) goto DIE;
-	  response_rfinish(RESPONSE_ANSWER);
-	  cached += 4;
-	  cachedlen -= 4;
-	}
-	cleanup(z);
-	return 1;
+        log_cachedanswer(d,DNS_T_A);
+        if (!rqa(z)) goto DIE;
+        while (cachedlen >= 4) {
+          if (!response_rstart(d,DNS_T_A,ttl)) goto DIE;
+          if (!response_addbytes(cached,4)) goto DIE;
+          response_rfinish(RESPONSE_ANSWER);
+          cached += 4;
+          cachedlen -= 4;
+        }
+        cleanup(z);
+        return 1;
       }
     }
 
@@ -516,31 +516,31 @@ static int doit(struct query *z,int state)
       byte_copy(key,2,DNS_T_AAAA);
       cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
       if (cached && (cachedlen || byte_diff(dtype,2,DNS_T_ANY))) {
-	if (z->level) {
-	  log_cachedanswer(d,DNS_T_AAAA);
-	  while (cachedlen >= 16) {
-	    for (k = 0;k < 256;k += 16)
-	      if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
-		byte_copy(z->servers[z->level - 1] + k,16,cached);
-		break;
-	      }
-	    cached += 16;
-	    cachedlen -= 16;
-	  }
-	  goto LOWERLEVEL;
-	}
+        if (z->level) {
+          log_cachedanswer(d,DNS_T_AAAA);
+          while (cachedlen >= 16) {
+            for (k = 0;k < 256;k += 16)
+              if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
+                byte_copy(z->servers[z->level - 1] + k,16,cached);
+                break;
+              }
+            cached += 16;
+            cachedlen -= 16;
+          }
+          goto LOWERLEVEL;
+        }
 
-	log_cachedanswer(d,DNS_T_AAAA);
-	if (!rqa(z)) goto DIE;
-	while (cachedlen >= 16) {
-	  if (!response_rstart(d,DNS_T_AAAA,ttl)) goto DIE;
-	  if (!response_addbytes(cached,16)) goto DIE;
-	  response_rfinish(RESPONSE_ANSWER);
-	  cached += 16;
-	  cachedlen -= 16;
-	}
-	cleanup(z);
-	return 1;
+        log_cachedanswer(d,DNS_T_AAAA);
+        if (!rqa(z)) goto DIE;
+        while (cachedlen >= 16) {
+          if (!response_rstart(d,DNS_T_AAAA,ttl)) goto DIE;
+          if (!response_addbytes(cached,16)) goto DIE;
+          response_rfinish(RESPONSE_ANSWER);
+          cached += 16;
+          cachedlen -= 16;
+        }
+        cleanup(z);
+        return 1;
       }
     }
 
@@ -548,21 +548,21 @@ static int doit(struct query *z,int state)
       byte_copy(key,2,dtype);
       cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
       if (cached && (cachedlen || byte_diff(dtype,2,DNS_T_ANY))) {
-	log_cachedanswer(d,dtype);
-	if (!rqa(z)) goto DIE;
-	while (cachedlen >= 2) {
-	  uint16_unpack_big(cached,&datalen);
-	  cached += 2;
-	  cachedlen -= 2;
-	  if (datalen > cachedlen) goto DIE;
-	  if (!response_rstart(d,dtype,ttl)) goto DIE;
-	  if (!response_addbytes(cached,datalen)) goto DIE;
-	  response_rfinish(RESPONSE_ANSWER);
-	  cached += datalen;
-	  cachedlen -= datalen;
-	}
-	cleanup(z);
-	return 1;
+        log_cachedanswer(d,dtype);
+        if (!rqa(z)) goto DIE;
+        while (cachedlen >= 2) {
+          uint16_unpack_big(cached,&datalen);
+          cached += 2;
+          cachedlen -= 2;
+          if (datalen > cachedlen) goto DIE;
+          if (!response_rstart(d,dtype,ttl)) goto DIE;
+          if (!response_addbytes(cached,datalen)) goto DIE;
+          response_rfinish(RESPONSE_ANSWER);
+          cached += datalen;
+          cachedlen -= datalen;
+        }
+        cleanup(z);
+        return 1;
       }
     }
   }
@@ -582,17 +582,17 @@ static int doit(struct query *z,int state)
         case_lowerb(key + 2,dlen);
         cached = cache_get(key,dlen + 2,&cachedlen,&ttl);
         if (cached && cachedlen) {
-	  z->control[z->level] = d;
+          z->control[z->level] = d;
           byte_zero(z->servers[z->level],256);
           for (j = 0;j < QUERY_MAXNS;++j)
             dns_domain_free(&z->ns[z->level][j]);
           pos = 0;
           j = 0;
           while ((pos = dns_packet_getname(cached,cachedlen,pos,&t1))) {
-	    log_cachedns(d,t1);
+            log_cachedns(d,t1);
             if (j < QUERY_MAXNS)
               if (!dns_domain_copy(&z->ns[z->level][j++],t1)) goto DIE;
-	  }
+          }
           break;
         }
       }
@@ -611,7 +611,7 @@ static int doit(struct query *z,int state)
         if (!dns_domain_copy(&z->name[z->level + 1],z->ns[z->level][j])) goto DIE;
         dns_domain_free(&z->ns[z->level][j]);
         ++z->level;
-	z->ipv6[z->level]=0;
+        z->ipv6[z->level]=0;
         goto NEWNAME;
       }
       dns_domain_free(&z->ns[z->level][j]);
@@ -648,7 +648,7 @@ static int doit(struct query *z,int state)
   buf = z->dt.packet;
   len = z->dt.packetlen;
 
-  whichserver = z->dt.servers + 16 * z->dt.curserver;
+  whichserver = (unsigned char *)(unsigned long)z->dt.servers + 16 * z->dt.curserver;
   control = z->control[z->level];
   d = z->name[z->level];
 /*  dtype = z->level ? DNS_T_A : z->type; */
@@ -683,10 +683,10 @@ static int doit(struct query *z,int state)
         else if (typematch(header,DNS_T_CNAME)) {
           if (!dns_packet_getname(buf,len,pos,&cname)) goto DIE;
           flagcname = 1;
-	  cnamettl = ttlget(header + 4);
+          cnamettl = ttlget(header + 4);
         }
       }
-  
+
     uint16_unpack_big(header + 8,&datalen);
     pos += datalen;
   }
@@ -718,7 +718,7 @@ static int doit(struct query *z,int state)
     }
 
 
-  if (records) { alloc_free(records); records = 0; }
+  if (records) { alloc_free((void *)records); records = 0; }
 
   k = numanswers + numauthority + numglue;
   records = (unsigned int *) alloc(k * sizeof(unsigned int));
@@ -838,10 +838,10 @@ static int doit(struct query *z,int state)
         if (byte_equal(header + 8,2,"\0\4")) {
           pos = dns_packet_copy(buf,len,pos,header,4); if (!pos) goto DIE;
           if (ignoreip.len)
-	    for(ii = 0; ii < ignoreip.len; ii+= 16) {
-	      if (byte_equal(ignoreip.s+ii,12,V4mappedprefix) &&
-	          byte_equal(header,4,ignoreip.s+ii+12)) goto NXDOMAIN;
-	    }
+            for(ii = 0; ii < ignoreip.len; ii+= 16) {
+              if (byte_equal(ignoreip.s+ii,12,V4mappedprefix) &&
+                  byte_equal(header,4,ignoreip.s+ii+12)) goto NXDOMAIN;
+            }
           save_data(header,4);
           log_rr(whichserver,t1,DNS_T_A,header,4,ttl);
         }
@@ -857,8 +857,8 @@ static int doit(struct query *z,int state)
         if (byte_equal(header + 8,2,"\0\20")) {
           pos = dns_packet_copy(buf,len,pos,header,16); if (!pos) goto DIE;
           if (ignoreip.len)
-	    for(ii = 0; ii < ignoreip.len; ii+= 16)
-	      if (byte_equal(header,16,ignoreip.s+ii)) goto NXDOMAIN;
+            for(ii = 0; ii < ignoreip.len; ii+= 16)
+              if (byte_equal(header,16,ignoreip.s+ii)) goto NXDOMAIN;
           save_data(header,16);
           log_rr(whichserver,t1,DNS_T_AAAA,header,16,ttl);
         }
@@ -884,7 +884,7 @@ static int doit(struct query *z,int state)
     i = j;
   }
 
-  alloc_free(records); records = 0;
+  alloc_free((void *)records); records = 0;
 
 
   if (flagcname) {
@@ -922,12 +922,12 @@ static int doit(struct query *z,int state)
         if (byte_diff(DNS_T_CNAME,2,dtype)) {
           save_start();
           save_finish(dtype,d,soattl);
-	  log_nodata(whichserver,d,dtype,soattl);
-	  if (z->level && !byte_diff(DNS_T_A,2,dtype)) {
-	    d = z->name[z->level];
-	    z->ipv6[z->level] = 1;
-	    goto NEWNAME; /* retry, will ask for AAAA next */
-	  }
+          log_nodata(whichserver,d,dtype,soattl);
+          if (z->level && !byte_diff(DNS_T_A,2,dtype)) {
+            d = z->name[z->level];
+            z->ipv6[z->level] = 1;
+            goto NEWNAME; /* retry, will ask for AAAA next */
+          }
         }
 
   log_stats();
@@ -946,7 +946,7 @@ static int doit(struct query *z,int state)
               if (datalen == 4)
                 for (k = 0;k < 256;k += 16)
                   if (byte_equal(z->servers[z->level - 1] + k,16,V6any)) {
-		    byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
+                    byte_copy(z->servers[z->level - 1] + k,12,V4mappedprefix);
                     if (!dns_packet_copy(buf,len,pos,(char*)(z->servers[z->level - 1] + k + 12),4)) goto DIE;
                     break;
                   }
@@ -958,7 +958,7 @@ static int doit(struct query *z,int state)
                     if (!dns_packet_copy(buf,len,pos,(char*)(z->servers[z->level - 1] + k),16)) goto DIE;
                     break;
                   }
-	}
+        }
         pos += datalen;
       }
       goto LOWERLEVEL;
@@ -976,7 +976,7 @@ static int doit(struct query *z,int state)
         if (byte_equal(header + 2,2,DNS_C_IN)) /* should always be true */
           if (typematch(header,dtype)) {
             if (!response_rstart(t1,header,ttl)) goto DIE;
-  
+
             if (typematch(header,DNS_T_NS) || typematch(header,DNS_T_CNAME) || typematch(header,DNS_T_PTR)) {
               if (!dns_packet_getname(buf,len,pos,&t2)) goto DIE;
               if (!response_addname(t2)) goto DIE;
@@ -999,7 +999,7 @@ static int doit(struct query *z,int state)
               if (pos + datalen > len) goto DIE;
               if (!response_addbytes(buf + pos,datalen)) goto DIE;
             }
-  
+
             response_rfinish(RESPONSE_ANSWER);
           }
 
@@ -1045,7 +1045,7 @@ static int doit(struct query *z,int state)
 
   DIE:
   cleanup(z);
-  if (records) { alloc_free(records); records = 0; }
+  if (records) { alloc_free((void *)records); records = 0; }
   return -1;
 }
 
